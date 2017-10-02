@@ -14,9 +14,11 @@ public class FightManager : MonoBehaviour
 
     private bool firstDogLocked, secondDogLocked;
 
-    private static readonly float waitSeconds = 1f;
+    private static readonly float waitSeconds = 2f;
 
     private static readonly float biteLockStrengthDecrease = 0.5f;
+
+    public SoundManager sound;
 
     public enum FightAction
     {
@@ -26,7 +28,11 @@ public class FightManager : MonoBehaviour
         Scratch,
         UseItem,
         SwitchDog,
-        Run
+        Run,
+
+
+
+        Count
     }
     
     public string StartFight(Dog dog1, Dog dog2)
@@ -46,6 +52,8 @@ public class FightManager : MonoBehaviour
     public string AggressionRound()
     {
         //should there be a random roll??
+
+        sound.PlayBark();
 
         Dog aggressor;
         Dog victim;
@@ -91,20 +99,34 @@ public class FightManager : MonoBehaviour
         }
         yield return new WaitForSeconds(waitSeconds);
 
+        var wait = sound.PlayBite();
+
         Debug.Log(Bite(firstDog, seconDog));
 
+        yield return new WaitForSeconds(wait);
+
+        yield return new WaitForSeconds(sound.PlayWhine());
+        
         if (!seconDog.alive)
         {
+
             fightRunning = false;
             yield break;
         }
         yield return new WaitForSeconds(waitSeconds);
 
+        wait = sound.PlayBite();
+
         Debug.Log(Bite(seconDog, firstDog));
+
+        yield return new WaitForSeconds(wait);
+
+        yield return new WaitForSeconds(sound.PlayWhine());
 
         if (!firstDog.alive)
         {
             fightRunning = false;
+            yield break;
         }
 
         if (seconDog.biteIsLocked && firstDog.biteIsLocked)
@@ -125,11 +147,39 @@ public class FightManager : MonoBehaviour
 
         if(!fightRunning)
              throw new ExecutionEngineException("Calling round while fight is not running. Are the dogs still alive?");
-
+        
         // ACTION RESOLUTION
-        Debug.Log("Player used: " + chosenAction.ToString());
+        ResolvePlayerAction(chosenAction);
 
         StartCoroutine(RoundRoutine());
+    }
+
+    private void ResolvePlayerAction(FightAction action)
+    {
+        switch (action)
+        {
+            case FightAction.ThroatBite:
+                Debug.Log("\"Go for the Throat, '"+dog1+"'!\"");
+                break;
+            case FightAction.LockBite:
+                Debug.Log("\"Lock your jaws around its neck, '" + dog1 + "'!\"");
+                break;
+            case FightAction.Scratch:
+                Debug.Log("\"Scratch it, '" + dog1 + "'!\"");
+                break;
+            case FightAction.Tackle:
+                Debug.Log("\"Tackle it, '" + dog1 + "'!\"");
+                break;
+            case FightAction.Run:
+                Debug.Log("You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.");
+                break;
+            case FightAction.UseItem:
+                Debug.Log("You do not have any Items to use.");
+                break;
+            default:
+                break;
+        }
+
     }
 
     private static string Bite(Dog attacker, Dog victimDog)
