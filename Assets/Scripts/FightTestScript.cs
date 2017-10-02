@@ -7,6 +7,8 @@ public class FightTestScript : MonoBehaviour
 {
     public Dog dog1, dog2;
 
+    public FightManager fightManager;
+
     private bool fightStarted;
 
     void Start()
@@ -22,12 +24,12 @@ public class FightTestScript : MonoBehaviour
 
 	    if (!fightStarted)
 	    {
-	        Debug.Log(FightManager.StartFight(dog1, dog2));
+	        Debug.Log(fightManager.StartFight(dog1, dog2));
 	        fightStarted = true;
 	    }
 	    else
 	    {
-	        Debug.Log(FightManager.Round(FightManager.FightAction.Tackle));
+            fightManager.Round(FightManager.FightAction.Tackle);
 	    }
 	}
 }

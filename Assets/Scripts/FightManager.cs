@@ -8,13 +8,13 @@ using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
 {
-    private static FightManager instance;
-
     private bool fightRunning;
 
     private Dog dog1, dog2;
 
     private bool firstDogLocked, secondDogLocked;
+
+    private static readonly float waitSeconds = 1f;
 
     private static readonly float biteLockStrengthDecrease = 0.5f;
 
@@ -29,42 +29,36 @@ public class FightManager : MonoBehaviour
         Run
     }
     
-    public static string StartFight(Dog dog1, Dog dog2)
+    public string StartFight(Dog dog1, Dog dog2)
     {
-        if (!instance)
-        {
-            instance = new FightManager();
-
-        }
-
-        instance.fightRunning = true;
+        fightRunning = true;
         //should we reset the current strength to strength
         dog1.currentStrength = dog1.strength;
         dog2.currentStrength = dog2.strength;
 
-        instance.dog1 = dog1;
-        instance.dog2 = dog2;
+        this.dog1 = dog1;
+        this.dog2 = dog2;
         
         return "The fight between the " + dog1.race + ", '" + dog1 + "', and the "
             + dog2.race + ", '" + dog2 + "' has started.";
     }
 
-    public static string AggressionRound()
+    public string AggressionRound()
     {
         //should there be a random roll??
 
         Dog aggressor;
         Dog victim;
 
-        if (instance.dog1.aggression > instance.dog2.aggression)
+        if (dog1.aggression > dog2.aggression)
         {
-            aggressor = instance.dog1;
-            victim = instance.dog2;
+            aggressor = dog1;
+            victim = dog2;
         }
         else
         {
-            aggressor = instance.dog2;
-            victim = instance.dog1;
+            aggressor = dog2;
+            victim = dog1;
         }
 
         var value = aggressor.aggression - victim.courage;
@@ -80,56 +74,62 @@ public class FightManager : MonoBehaviour
 
     }
 
-    public static string Round(FightAction chosenAction)
+    private IEnumerator RoundRoutine()
     {
-        if(!instance.fightRunning)
-             throw new ExecutionEngineException("Calling round while fight is not running. Are the dogs still alive?");
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        // ACTION RESOLUTION
-        stringBuilder.AppendLine("Player used: " +chosenAction.ToString());
-
 
         Dog firstDog, seconDog;
 
-        if (instance.dog1.GetFightSpeed() * Random.value > instance.dog2.GetFightSpeed() * Random.value)
+        if (dog1.GetFightSpeed() * Random.value > dog2.GetFightSpeed() * Random.value)
         {
-            firstDog = instance.dog1;
-            seconDog = instance.dog2;
+            firstDog = dog1;
+            seconDog = dog2;
         }
         else
         {
-            seconDog = instance.dog1;
-            firstDog = instance.dog2;
+            seconDog = dog1;
+            firstDog = dog2;
         }
+        yield return new WaitForSeconds(waitSeconds);
 
-        stringBuilder.AppendLine(Bite(firstDog, seconDog));
+        Debug.Log(Bite(firstDog, seconDog));
 
         if (!seconDog.alive)
         {
-            instance.fightRunning = false;
-            return stringBuilder.ToString();
-        }    
-        
-        stringBuilder.AppendLine(Bite(seconDog, firstDog));
+            fightRunning = false;
+            yield break;
+        }
+        yield return new WaitForSeconds(waitSeconds);
+
+        Debug.Log(Bite(seconDog, firstDog));
 
         if (!firstDog.alive)
         {
-            instance.fightRunning = false;
-            return stringBuilder.ToString();
+            fightRunning = false;
         }
 
         if (seconDog.biteIsLocked && firstDog.biteIsLocked)
         {
             seconDog.biteIsLocked = false;
             firstDog.biteIsLocked = false;
-            stringBuilder.AppendLine("The dogs jaws are locked onto eachother.");
+            yield return new WaitForSeconds(waitSeconds);
+            Debug.Log("The dogs jaws are locked onto eachother.");
 
-            stringBuilder.AppendLine("The Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
+            Debug.Log("The Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
         }
 
-        return stringBuilder.ToString();
+    }
+
+
+    public void Round(FightAction chosenAction)
+    {
+
+        if(!fightRunning)
+             throw new ExecutionEngineException("Calling round while fight is not running. Are the dogs still alive?");
+
+        // ACTION RESOLUTION
+        Debug.Log("Player used: " + chosenAction.ToString());
+
+        StartCoroutine(RoundRoutine());
     }
 
     private static string Bite(Dog attacker, Dog victimDog)
@@ -175,4 +175,6 @@ public class FightManager : MonoBehaviour
 
         return stringBuilder.ToString();
     }
+
+    
 }
