@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
 {
-    public static FightManager instance;
+    private static FightManager instance;
 
     private bool fightRunning;
 
@@ -28,21 +28,23 @@ public class FightManager : MonoBehaviour
         SwitchDog,
         Run
     }
-
-    void Start()
-    {
-        instance = new FightManager();
-    }
-
+    
     public static string StartFight(Dog dog1, Dog dog2)
     {
+        if (!instance)
+        {
+            instance = new FightManager();
+
+        }
+
         instance.fightRunning = true;
+        //should we reset the current strength to strength
+        dog1.currentStrength = dog1.strength;
+        dog2.currentStrength = dog2.strength;
 
         instance.dog1 = dog1;
         instance.dog2 = dog2;
         
-        //should we reset the current strength to strength
-
         return "The fight between the " + dog1.race + ", " + dog1.name + ", and the "
             + dog2.race + ", " + dog2.name + " has started.";
     }
@@ -86,7 +88,7 @@ public class FightManager : MonoBehaviour
         StringBuilder stringBuilder = new StringBuilder();
 
         // ACTION RESOLUTION
-        stringBuilder.AppendLine(chosenAction.ToString());
+        stringBuilder.AppendLine("Player used: " +chosenAction.ToString());
 
 
         Dog firstDog, seconDog;
