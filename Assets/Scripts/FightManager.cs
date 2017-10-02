@@ -45,8 +45,8 @@ public class FightManager : MonoBehaviour
         instance.dog1 = dog1;
         instance.dog2 = dog2;
         
-        return "The fight between the " + dog1.race + ", " + dog1.name + ", and the "
-            + dog2.race + ", " + dog2.name + " has started.";
+        return "The fight between the " + dog1.race + ", '" + dog1 + "', and the "
+            + dog2.race + ", '" + dog2 + "' has started.";
     }
 
     public static string AggressionRound()
