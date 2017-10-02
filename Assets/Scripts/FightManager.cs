@@ -176,6 +176,9 @@ public class FightManager : MonoBehaviour
             case FightAction.UseItem:
                 Debug.Log("You do not have any Items to use.");
                 break;
+            case FightAction.SwitchDog:
+                Debug.Log("You can not change dogs during this fight.");
+                break;
             default:
                 break;
         }
