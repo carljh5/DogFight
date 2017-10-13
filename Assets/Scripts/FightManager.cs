@@ -20,6 +20,10 @@ public class FightManager : MonoBehaviour
 
     public SoundManager sound;
 
+	public string feedbackStr = "";
+
+	public FeedbackManager feedback;
+
     public enum FightAction
     {
         ThroatBite,
@@ -71,9 +75,10 @@ public class FightManager : MonoBehaviour
 
         var value = aggressor.aggression - victim.courage;
 
-        if (value <= 0)
+		if (value <= 0) 
             return aggressor + " barks vicously, frightening the closest spectators, " +
                    "but " + victim + " seems unaffected.";
+			
 
         victim.currentStrength -= value;
 
@@ -84,7 +89,6 @@ public class FightManager : MonoBehaviour
 
     private IEnumerator RoundRoutine()
     {
-
         Dog firstDog, seconDog;
 
         if (dog1.GetFightSpeed() * Random.value > dog2.GetFightSpeed() * Random.value)
@@ -101,7 +105,9 @@ public class FightManager : MonoBehaviour
 
         var wait = sound.PlayBite();
 
-        Debug.Log(Bite(firstDog, seconDog));
+        //Debug.Log(Bite(firstDog, seconDog));
+		feedback.Feed (Bite(firstDog, seconDog));
+		//feedbackStr = Bite (firstDog, seconDog);
 
         yield return new WaitForSeconds(wait);
 
@@ -117,7 +123,9 @@ public class FightManager : MonoBehaviour
 
         wait = sound.PlayBite();
 
-        Debug.Log(Bite(seconDog, firstDog));
+        //Debug.Log(Bite(seconDog, firstDog));
+		feedback.Feed (Bite (seconDog, firstDog));
+		//feedbackStr = Bite (firstDog, seconDog);
 
         yield return new WaitForSeconds(wait);
 
@@ -134,11 +142,13 @@ public class FightManager : MonoBehaviour
             seconDog.biteIsLocked = false;
             firstDog.biteIsLocked = false;
             yield return new WaitForSeconds(waitSeconds);
-            Debug.Log("The dogs jaws are locked onto eachother.");
+            //Debug.Log("The dogs jaws are locked onto eachother.");
 
-            Debug.Log("The Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
+            //Debug.Log("The Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
+
+			//feedbackStr = "The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.";
+			feedback.Feed ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
         }
-
     }
 
 
@@ -155,29 +165,43 @@ public class FightManager : MonoBehaviour
     }
 
     private void ResolvePlayerAction(FightAction action)
-    {
+	{
         switch (action)
         {
-            case FightAction.ThroatBite:
-                Debug.Log("\"Go for the Throat, '"+dog1+"'!\"");
+		case FightAction.ThroatBite:
+			//Debug.Log ("\"Go for the Throat, '" + dog1 + "'!\"");
+			feedbackStr = "\"Go for the Throat, '" + dog1 + "'!\"";
+			feedback.Feed (feedbackStr);
                 break;
             case FightAction.LockBite:
-                Debug.Log("\"Lock your jaws around its neck, '" + dog1 + "'!\"");
+                //Debug.Log("\"Lock your jaws around its neck, '" + dog1 + "'!\"");
+				feedbackStr = "\"Lock your jaws around its neck, '" + dog1 + "'!\"";
+			feedback.Feed (feedbackStr);
                 break;
-            case FightAction.Scratch:
-                Debug.Log("\"Scratch it, '" + dog1 + "'!\"");
+		case FightAction.Scratch:
+				//Debug.Log ("\"Scratch it, '" + dog1 + "'!\"");
+				feedbackStr = "\"Scratch it, '" + dog1 + "'!\"";
+			feedback.Feed (feedbackStr);
                 break;
-            case FightAction.Tackle:
-                Debug.Log("\"Tackle it, '" + dog1 + "'!\"");
+		case FightAction.Tackle:
+				//Debug.Log ("\"Tackle it, '" + dog1 + "'!\"");
+				feedbackStr = "\"Tackle it, '" + dog1 + "'!\"";
+			feedback.Feed (feedbackStr);
                 break;
-            case FightAction.Run:
-                Debug.Log("You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.");
+		case FightAction.Run:
+				//Debug.Log ("You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.");
+				feedbackStr = "You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.";
+			feedback.Feed (feedbackStr);
                 break;
-            case FightAction.UseItem:
-                Debug.Log("You do not have any Items to use.");
+		case FightAction.UseItem:
+				//Debug.Log ("You do not have any Items to use.");
+				feedbackStr = "You do not have any Items to use.";
+			feedback.Feed (feedbackStr);
                 break;
-            case FightAction.SwitchDog:
-                Debug.Log("You can not change dogs during this fight.");
+		case FightAction.SwitchDog:
+				//Debug.Log ("You can not change dogs during this fight.");
+				feedbackStr = "You can not change dogs during this fight.";
+			feedback.Feed (feedbackStr);
                 break;
             default:
                 break;
