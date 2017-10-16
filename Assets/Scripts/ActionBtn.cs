@@ -14,12 +14,6 @@ public class ActionBtn : MonoBehaviour {
 	}
 
 	public void Action() {
-		if (!aggressionRoundDone) {
-			feedback.Feed (fightManager.AggressionRound ());
-			//Debug.Log (fightManager.AggressionRound ());
-			aggressionRoundDone = true;
-		} else {
-			fightManager.Round (fightAction);
-		}
+		fightManager.Round (fightAction);
 	}
 }

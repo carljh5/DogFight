@@ -6,7 +6,7 @@ public class FeedbackManager : MonoBehaviour {
 	public GameObject[] panels;
 	public TextAnim display;
 	private List<string> feedback = new List<string>();
-	private bool isStreamRunning;
+	public bool isStreamRunning { get; private set; }
 
 	public void Feed(string str) {
 		print (str);
