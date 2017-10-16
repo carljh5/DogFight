@@ -44,8 +44,17 @@ public class FightManager : MonoBehaviour
 
         dog1.biteIsLocked = dog2.biteIsLocked = false;
 
-        feedback.Feed(StartFight(dog1, dog2));
+        //feedback.FeedSingle(StartFight(dog1, dog2));
+		StartCoroutine(OpeningRoutine());
     }
+
+	IEnumerator OpeningRoutine() {
+		feedback.Feed (StartFight(dog1, dog2));
+		yield return new WaitForSeconds (waitSeconds+1f);
+		feedback.Feed (AggressionRound());
+		yield return new WaitForSeconds (waitSeconds+1f);
+		feedback.StopFeed ();
+	}
     
     public string StartFight(Dog dog1, Dog dog2)
     {
@@ -127,6 +136,8 @@ public class FightManager : MonoBehaviour
         {
 
             fightRunning = false;
+			yield return new WaitForSeconds (waitSeconds);
+			feedback.StopFeed ();
             yield break;
         }
         yield return new WaitForSeconds(waitSeconds);
@@ -142,6 +153,8 @@ public class FightManager : MonoBehaviour
         if (!firstDog.alive)
         {
             fightRunning = false;
+			yield return new WaitForSeconds (waitSeconds);
+			feedback.StopFeed ();
             yield break;
         }
 
@@ -153,6 +166,8 @@ public class FightManager : MonoBehaviour
 
             feedback.Feed ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
         }
+		yield return new WaitForSeconds (waitSeconds);
+		feedback.StopFeed ();
     }
 
 
@@ -175,42 +190,35 @@ public class FightManager : MonoBehaviour
 		case FightAction.ThroatBite:
 			//Debug.Log ("\"Go for the Throat, '" + dog1 + "'!\"");
 			feedbackStr = "\"Go for the Throat, '" + dog1 + "'!\"";
-			feedback.Feed (feedbackStr);
                 break;
             case FightAction.LockBite:
                 //Debug.Log("\"Lock your jaws around its neck, '" + dog1 + "'!\"");
 				feedbackStr = "\"Lock your jaws around its neck, '" + dog1 + "'!\"";
-			feedback.Feed (feedbackStr);
                 break;
 		case FightAction.Scratch:
 				//Debug.Log ("\"Scratch it, '" + dog1 + "'!\"");
 				feedbackStr = "\"Scratch it, '" + dog1 + "'!\"";
-			feedback.Feed (feedbackStr);
                 break;
 		case FightAction.Tackle:
 				//Debug.Log ("\"Tackle it, '" + dog1 + "'!\"");
 				feedbackStr = "\"Tackle it, '" + dog1 + "'!\"";
-			feedback.Feed (feedbackStr);
                 break;
 		case FightAction.Run:
 				//Debug.Log ("You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.");
 				feedbackStr = "You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.";
-			feedback.Feed (feedbackStr);
                 break;
 		case FightAction.UseItem:
 				//Debug.Log ("You do not have any Items to use.");
 				feedbackStr = "You do not have any Items to use.";
-			feedback.Feed (feedbackStr);
                 break;
 		case FightAction.SwitchDog:
 				//Debug.Log ("You can not change dogs during this fight.");
 				feedbackStr = "You can not change dogs during this fight.";
-			feedback.Feed (feedbackStr);
                 break;
             default:
                 break;
         }
-
+		feedback.Feed(feedbackStr);
     }
 
     private static string Bite(Dog attacker, Dog victimDog)
