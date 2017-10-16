@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class Dog : MonoBehaviour
 {
@@ -12,7 +13,25 @@ public class Dog : MonoBehaviour
     public Race race;
 
     public GameObject prefab;
-    
+
+    [HideInInspector]
+    public Image healthBar;
+    public delegate IEnumerator OnStrengthChangeDelegate(float newValue,float oldValue);
+    public event OnStrengthChangeDelegate OnStrengthChange;
+
+    private float m_currentStrength;
+    [HideInInspector]
+    public float currentStrength { get { return m_currentStrength; }
+        set
+        {
+            if (value != m_currentStrength&& healthBar!= null)
+            {
+                healthBar.fillAmount = value / strength;
+            }
+            m_currentStrength = value;
+        }
+    }
+
     [Header("Fighting stats (10 = normal)")]
     //variables should probably have a max and a min.
     //could also be obscured for the player
@@ -26,11 +45,10 @@ public class Dog : MonoBehaviour
     public float speed = 10;
     //how hard the bite. Also used to grip the opponent dog
     public float bite = 10;
-    [HideInInspector]
-    public float currentStrength;
     
     public bool alive = true;
     public bool biteIsLocked = false;
+
 
 
     [Header("Unused variables")]

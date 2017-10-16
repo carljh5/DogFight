@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
@@ -12,7 +13,9 @@ public class FightManager : MonoBehaviour
 
     public Dog dog1, dog2;
 
-    private static readonly float waitSeconds = 2f;
+    public Image dog1HealthBar, dog2HealthBar;
+
+    private static readonly float waitSeconds = 4f;
 
     private static readonly float biteLockStrengthDecrease = 0.5f;
 
@@ -62,6 +65,9 @@ public class FightManager : MonoBehaviour
         //should we reset the current strength to strength
         dog1.currentStrength = dog1.strength;
         dog2.currentStrength = dog2.strength;
+
+        dog1.healthBar = dog1HealthBar;
+        dog2.healthBar = dog2HealthBar; 
 
         this.dog1 = dog1;
         this.dog2 = dog2;
@@ -246,6 +252,7 @@ public class FightManager : MonoBehaviour
         }
         else if (attacker.GetFightBite() *roll > victimDog.currentStrength)
         {
+            victimDog.currentStrength = 0;
             stringBuilder.AppendLine(attacker + " bites "+ victimDog +" in the neck. Ripping through its windpipe..");
 
             //should probably make a lot of different death texts
@@ -256,8 +263,8 @@ public class FightManager : MonoBehaviour
         else
         {
             //USE THIS IF FIGHTS SHOULD BE LESS RANDOM
-            if (attacker.GetFightBite()/2 > victimDog.currentStrength)
-                victimDog.currentStrength -= (attacker.GetFightBite()/2) - victimDog.currentStrength;
+            if (attacker.GetFightBite()/1.5 > victimDog.currentStrength)
+                victimDog.currentStrength -= (attacker.GetFightBite()/1.5f) - victimDog.currentStrength;
 
             stringBuilder.AppendLine(attacker + " bites " + victimDog + ".");
             

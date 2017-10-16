@@ -8,7 +8,9 @@ public class FeedbackManager : MonoBehaviour {
 	private string feedStr;
 	private List<string> feedback = new List<string>();
 	public bool isStreamRunning { get; private set; }
+    public float waitingTime = 4f;
 	private bool runStream;
+
 
 	public void Feed(string str) {
 		print (str);
