@@ -51,6 +51,7 @@ public class SoundManager : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
         backgroundAudioSource = gameObject.AddComponent<AudioSource>();
+        backgroundAudioSource.loop = true;
 
         backgroundSounds = new Dictionary<BackgroundSound, AudioClip>();
 

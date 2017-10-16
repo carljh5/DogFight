@@ -28,12 +28,9 @@ public class Dog : MonoBehaviour
     public float bite = 10;
     [HideInInspector]
     public float currentStrength;
-
-    [HideInInspector]
+    
     public bool alive = true;
-
-    [HideInInspector]
-    public bool biteIsLocked;
+    public bool biteIsLocked = false;
 
 
     [Header("Unused variables")]

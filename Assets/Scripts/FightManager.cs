@@ -10,9 +10,7 @@ public class FightManager : MonoBehaviour
 {
     private bool fightRunning;
 
-    private Dog dog1, dog2;
-
-    private bool firstDogLocked, secondDogLocked;
+    public Dog dog1, dog2;
 
     private static readonly float waitSeconds = 2f;
 
@@ -37,6 +35,16 @@ public class FightManager : MonoBehaviour
 
 
         Count
+    }
+
+    public void StartFight()
+    {
+        dog1.NameDog("Beauty");
+        dog2.NameDog("Beast");
+
+        dog1.biteIsLocked = dog2.biteIsLocked = false;
+
+        feedback.Feed(StartFight(dog1, dog2));
     }
     
     public string StartFight(Dog dog1, Dog dog2)
@@ -93,6 +101,8 @@ public class FightManager : MonoBehaviour
     {
         Dog firstDog, seconDog;
 
+        //  ----------------- SPEED ROUND --------------------
+
         if (dog1.GetFightSpeed() * Random.value > dog2.GetFightSpeed() * Random.value)
         {
             firstDog = dog1;
@@ -106,10 +116,8 @@ public class FightManager : MonoBehaviour
         yield return new WaitForSeconds(waitSeconds);
 
         var wait = sound.PlayBite();
-
-        //Debug.Log(Bite(firstDog, seconDog));
+        
 		feedback.Feed (Bite(firstDog, seconDog));
-		//feedbackStr = Bite (firstDog, seconDog);
 
         yield return new WaitForSeconds(wait);
 
@@ -125,9 +133,7 @@ public class FightManager : MonoBehaviour
 
         wait = sound.PlayBite();
 
-        //Debug.Log(Bite(seconDog, firstDog));
 		feedback.Feed (Bite (seconDog, firstDog));
-		//feedbackStr = Bite (firstDog, seconDog);
 
         yield return new WaitForSeconds(wait);
 
@@ -144,12 +150,8 @@ public class FightManager : MonoBehaviour
             seconDog.biteIsLocked = false;
             firstDog.biteIsLocked = false;
             yield return new WaitForSeconds(waitSeconds);
-            //Debug.Log("The dogs jaws are locked onto eachother.");
 
-            //Debug.Log("The Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
-
-			//feedbackStr = "The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.";
-			feedback.Feed ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
+            feedback.Feed ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
         }
     }
 
@@ -246,10 +248,16 @@ public class FightManager : MonoBehaviour
         else
         {
             //USE THIS IF FIGHTS SHOULD BE LESS RANDOM
-            //if (attacker.GetFightBite() > victimDog.currentStrength) victimDog.currentStrength -= attacker.GetFightBite() - victimDog.currentStrength;
+            if (attacker.GetFightBite()/2 > victimDog.currentStrength)
+                victimDog.currentStrength -= (attacker.GetFightBite()/2) - victimDog.currentStrength;
 
-            attacker.biteIsLocked = true;
-            stringBuilder.AppendLine(attacker + " bites "+ victimDog +  ". Its jaws locking onto the skin of "+victimDog +  "'s neck.");
+            stringBuilder.AppendLine(attacker + " bites " + victimDog + ".");
+            
+            if (Random.value > 0.7)
+            {
+                attacker.biteIsLocked = true;
+                stringBuilder.AppendLine("Its jaws locking onto the skin of " + victimDog + "'s neck.");
+            }
         }
 
         return stringBuilder.ToString();
