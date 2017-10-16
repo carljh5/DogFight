@@ -5,7 +5,7 @@ using UnityEngine;
 public class StoryComponent : MonoBehaviour {
 	public string[] paragraphs; 
 	public TextAnim display;
-	public GameObject panelToGoTo;
+	public GameObject[] panelsToToggle;
 
 	private int index = 0;
 
@@ -20,8 +20,11 @@ public class StoryComponent : MonoBehaviour {
 			if (display.Play (paragraphs [index]))
 				index++;
 		} else {
-			if(display.Play (paragraphs [index-1])) {
-				panelToGoTo.SetActive (true);
+			if(display.Play (paragraphs [index-1])) 
+			{
+				foreach (GameObject go in panelsToToggle) {
+					go.SetActive (go.activeSelf ? false : true);
+				}
 				gameObject.SetActive (false);
 			}
 		}
