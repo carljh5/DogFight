@@ -12,8 +12,6 @@ public class TextAnim : MonoBehaviour {
 	private string bufString = "";
 	private Text text;
 
-
-
 	void Start () {
 		text = GetComponent<Text> ();	
 	}
@@ -23,8 +21,11 @@ public class TextAnim : MonoBehaviour {
 	}
 
 	void OnDisable() {
-		if(co != null)
-			StopCoroutine (co);
+	    if (co != null)
+	    {
+	        StopCoroutine (co);
+            SoundManager.StopTextSound();
+	    }
 	}
 
 	public bool Play(string str) {
@@ -36,6 +37,7 @@ public class TextAnim : MonoBehaviour {
 			if(co != null)
 				StopCoroutine (co);
 			text.text = bufString;
+            SoundManager.StopTextSound();
 			isAnimPlaying = false;
 			return false;
 		}
@@ -47,6 +49,7 @@ public class TextAnim : MonoBehaviour {
 		int charCount = str.Length;
 		int index = 0;
 		if (text != null) {
+            SoundManager.StartTextSound();
 			text.text = "";
 			while (text.text.Length < charCount) {
 				yield return new WaitForSeconds (speedOfTyping);
@@ -54,6 +57,7 @@ public class TextAnim : MonoBehaviour {
 				index++;
 			}
 		}
+        SoundManager.StopTextSound();
 		isAnimPlaying = false;
 		yield return null;
 	}

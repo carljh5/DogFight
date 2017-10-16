@@ -48,6 +48,8 @@ public class FightManager : MonoBehaviour
 
         this.dog1 = dog1;
         this.dog2 = dog2;
+
+        SoundManager.SetBackgroundSound(SoundManager.BackgroundSound.Fight0);
         
         return "The fight between the " + dog1.race + ", '" + dog1 + "', and the "
             + dog2.race + ", '" + dog2 + "' has started.";

@@ -11,9 +11,11 @@ public class StoryComponent : MonoBehaviour {
 
 	void OnEnable() {
 		Next ();
-	}
+        SoundManager.SetBackgroundSound(SoundManager.BackgroundSound.Start);
+    }
 
 	public void Next() {
+        SoundManager.PlayClick();
 		if (index < paragraphs.Length) {
 			if (display.Play (paragraphs [index]))
 				index++;
