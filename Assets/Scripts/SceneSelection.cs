@@ -4,11 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneSelection : MonoBehaviour
+public class SceneSelection : SelectionScreen
 {
-    public EventOption OptionEntry;
-    public GameObject optionGameObject;
-    public Text QuestionTextComponent;
 
     [Serializable]
     public struct Option
@@ -19,16 +16,17 @@ public class SceneSelection : MonoBehaviour
         public Sprite image;
     }
     public Option[] options;
-
-    public string question;
-
-    public void Awake()
-    {
-        optionGameObject.SetActive(false);
-    }
     
-    public void ShowOptions( )
+    
+    
+    public override void ShowOptions( )
     {
+        //DELETE OLD ENTRIES
+        foreach (var entry in instantiatedEntries)
+        {
+            Destroy(entry);
+        }
+
         optionGameObject.SetActive(true);
 
         QuestionTextComponent.text = question;
@@ -50,6 +48,8 @@ public class SceneSelection : MonoBehaviour
 
             ev.Scene = opt.scene;
             ev.PreviousScene = this.gameObject;
+
+            instantiatedEntries.Add(obj);
         }
     }
 }
