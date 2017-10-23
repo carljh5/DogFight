@@ -12,6 +12,8 @@ public class Dog : MonoBehaviour
     //could be a mix of races, but probably a good idea with one dominating for art purposes
     public Race race;
 
+	public Sprite sprite;
+
     public GameObject prefab;
 
     [HideInInspector]
