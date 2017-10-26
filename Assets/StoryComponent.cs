@@ -15,9 +15,10 @@ public class StoryComponent : MonoBehaviour {
     }
 
 	public void Next() {
+		
         SoundManager.PlayClick();
 		if (index < paragraphs.Length) {
-			if (display.Play (paragraphs [index]))
+			if (display.Play (paragraphs [index])) 
 				index++;
 		} else {
 			if(display.Play (paragraphs [index-1])) 

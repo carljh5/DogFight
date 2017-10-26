@@ -16,6 +16,13 @@ public class OptionSeletion : SelectionScreen
     }
     public Option[] options;
     
+	public GameObject scene;
+
+	void OnEnable() {
+		if (playOnAwake)
+			ShowOptions ();
+	}
+
     public override void ShowOptions( )
     {
 
@@ -47,6 +54,10 @@ public class OptionSeletion : SelectionScreen
 
             ev.Event = opt.optionEvent;
 
+			if (scene != null) {
+				ev.Scene = scene;
+				ev.PreviousScene = this.gameObject;
+			}
 
             instantiatedEntries.Add(obj);
         }

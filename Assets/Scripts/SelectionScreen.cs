@@ -10,7 +10,7 @@ public class SelectionScreen : MonoBehaviour
     public GameObject optionGameObject;
     public Text QuestionTextComponent;
     protected static List<GameObject> instantiatedEntries  = new List<GameObject>();
-    
+	public bool playOnAwake;
 
     public string question;
 

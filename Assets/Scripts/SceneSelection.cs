@@ -16,7 +16,13 @@ public class SceneSelection : SelectionScreen
         public Sprite image;
     }
     public Option[] options;
-    
+
+
+
+	void OnEnable() {
+		if (playOnAwake)
+			ShowOptions ();
+	}
     
     
     public override void ShowOptions( )

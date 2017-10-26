@@ -48,6 +48,8 @@ public class TextAnim : MonoBehaviour {
 		isAnimPlaying = true;
 		int charCount = str.Length;
 		int index = 0;
+		if(text == null)
+			text = GetComponent<Text> ();
 		if (text != null) {
             SoundManager.StartTextSound();
 			text.text = "";
