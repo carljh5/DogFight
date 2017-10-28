@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public static bool LeashDog;
     
-    public string[] EnemyDogs;
+    public Dog[] EnemyDogs;
 
     public Dog[] Dogs;
 
