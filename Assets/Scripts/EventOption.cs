@@ -20,8 +20,8 @@ public class EventOption : MonoBehaviour
             Scene.SetActive(true);
             PreviousScene.SetActive(false);
         }
-        else
-            GameManager.OptionSelected(Event);
+
+        GameManager.OptionSelected(Event);
 
         OptionPanel.SetActive(false);
     }
