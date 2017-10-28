@@ -58,5 +58,7 @@ public class StatScreen : MonoBehaviour
     public void ShowEnemyDog(bool show)
     {
         showEnemyDog = show;
+
+        gameObject.SetActive(true);
     }
 }
