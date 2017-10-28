@@ -21,7 +21,7 @@ public class FightTestScript : MonoBehaviour
 
         if (!fightStarted)
         {
-            Debug.Log(fightManager.StartFight(dog1, dog2));
+            //Debug.Log(fightManager.StartFight(dog1, dog2));
             fightStarted = true;
         }
 

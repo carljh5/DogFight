@@ -15,6 +15,10 @@ public class FightManager : MonoBehaviour
 
     public Image dog1HealthBar, dog2HealthBar;
 
+    public Text Dog1Text, Dog2Text;
+
+    public Image Dog1Image, Dog2Image;
+
     private static readonly float waitSeconds = 4f;
 
     private static readonly float biteLockStrengthDecrease = 0.5f;
@@ -42,10 +46,13 @@ public class FightManager : MonoBehaviour
 
     public void StartFight()
     {
+        dog1 = GameManager.PlayerDog;
+        dog2 = GameManager.GetNextEnemy();
+
         dog1.biteIsLocked = dog2.biteIsLocked = false;
 
         //feedback.FeedSingle(StartFight(dog1, dog2));
-		StartCoroutine(OpeningRoutine());
+        StartCoroutine(OpeningRoutine());
     }
 
 	IEnumerator OpeningRoutine() {
@@ -56,7 +63,7 @@ public class FightManager : MonoBehaviour
 		feedback.StopFeed ();
 	}
     
-    public string StartFight(Dog dog1, Dog dog2)
+    private string StartFight(Dog dog1, Dog dog2)
     {
         fightRunning = true;
         //should we reset the current strength to strength
@@ -64,7 +71,12 @@ public class FightManager : MonoBehaviour
         dog2.currentStrength = dog2.strength;
 
         dog1.healthBar = dog1HealthBar;
-        dog2.healthBar = dog2HealthBar; 
+        dog2.healthBar = dog2HealthBar;
+
+        Dog1Image.sprite = dog1.sprite;
+        Dog2Image.sprite = dog2.sprite;
+        Dog1Text.text = dog1.dogName;
+        Dog2Text.text = dog2.dogName;
 
         this.dog1 = dog1;
         this.dog2 = dog2;
