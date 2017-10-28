@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         UnleashDog
     }
 
+    public static string PlayerName;
 
     public static Dog PlayerDog;
 
@@ -21,7 +22,19 @@ public class GameManager : MonoBehaviour
     
     public string[] EnemyDogs;
 
+    public Dog[] Dogs;
+
+    private static GameManager instance;
+
     private int nextEnemyDogIdx;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+
+        Debug.Log("Game manager initialized.");
+    }
 
     public static void OptionSelected(GameEvent gameEvent)
     {
@@ -29,8 +42,26 @@ public class GameManager : MonoBehaviour
 
         switch (gameEvent)
         {
-            
+            case GameEvent.Dog1Selected:
+                PlayerDog = instance.Dogs[0];
+                break;
+
+            case GameEvent.Dog2Selected:
+                PlayerDog = instance.Dogs[1];
+                break;
+            case GameEvent.Dog3Selected:
+                PlayerDog = instance.Dogs[2];
+                break;
         }
     }
 
+    public static void SetName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            PlayerName = "Fulano";
+        else
+            PlayerName = name;
+
+        Debug.Log("Player is called " + PlayerName);
+    }
 }
