@@ -14,8 +14,6 @@ public class FightTestScript : MonoBehaviour
 
     void Start()
     {
-        dog1.NameDog("Beauty");
-        dog2.NameDog("Beast");
     }
 
 	// Update is called once per frame

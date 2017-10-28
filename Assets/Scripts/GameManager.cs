@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
         Dog2Selected,
         Dog3Selected,
         LeashDog,
-        UnleashDog
+        UnleashDog,
+        GoToNextFight
     }
 
     public static string PlayerName;
@@ -28,10 +29,15 @@ public class GameManager : MonoBehaviour
 
     private int nextEnemyDogIdx;
 
+    private FightManager fightManager;
+
     void Awake()
     {
         if (instance == null)
             instance = this;
+
+        //TODO: Delete this later:
+        PlayerDog = instance.Dogs[0];
 
         Debug.Log("Game manager initialized.");
     }
@@ -52,7 +58,31 @@ public class GameManager : MonoBehaviour
             case GameEvent.Dog3Selected:
                 PlayerDog = instance.Dogs[2];
                 break;
+            case GameEvent.LeashDog:
+            case GameEvent.UnleashDog:
+                //TODO: make sure this is called
+                LeashDog = gameEvent == GameEvent.LeashDog;
+                break;
+            case GameEvent.GoToNextFight:
+                instance.GoToNextFight();
+                break;
+            case GameEvent.IllegalEvent:
+            default:
+                Debug.LogWarning("illegal or unhandled GameEvent triggered: " + gameEvent);
+                break;
         }
+    }
+
+    private void GoToNextFight()
+    {
+        if (fightManager == null)
+            fightManager = GetComponent<FightManager>();
+
+        if (EnemyDogs.Length <= nextEnemyDogIdx)
+            nextEnemyDogIdx = EnemyDogs.Length - 1;
+
+        fightManager.dog1 = PlayerDog;
+        fightManager.dog2 = EnemyDogs[nextEnemyDogIdx++];
     }
 
     public static void SetName(string name)
@@ -63,5 +93,10 @@ public class GameManager : MonoBehaviour
             PlayerName = name;
 
         Debug.Log("Player is called " + PlayerName);
+    }
+
+    public static Dog GetNextEnemy()
+    {
+        return instance.EnemyDogs[instance.nextEnemyDogIdx];
     }
 }
