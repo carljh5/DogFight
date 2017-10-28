@@ -42,9 +42,6 @@ public class FightManager : MonoBehaviour
 
     public void StartFight()
     {
-        dog1.NameDog("Beauty");
-        dog2.NameDog("Beast");
-
         dog1.biteIsLocked = dog2.biteIsLocked = false;
 
         //feedback.FeedSingle(StartFight(dog1, dog2));

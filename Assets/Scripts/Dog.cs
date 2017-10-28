@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Dog : MonoBehaviour
 {
-    private string dogName;
+    public string dogName;
     //females should have defined when they are in heat. 
     public bool male;
     //could be a mix of races, but probably a good idea with one dominating for art purposes
@@ -75,11 +75,7 @@ public class Dog : MonoBehaviour
         AmericanPitbullTerrier,
         Chihuahua
     }
-
-    public void NameDog(string name)
-    {
-        dogName = name;
-    }
+    
 
     public float GetFightSpeed()
     {
