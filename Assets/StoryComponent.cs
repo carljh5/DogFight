@@ -14,6 +14,8 @@ public class StoryComponent : MonoBehaviour {
         SoundManager.SetBackgroundSound(SoundManager.BackgroundSound.Start);
     }
 
+
+    //TODO: check for escape characters like "/playername" and replace it with the relevant from the game manager.
 	public void Next() {
 		
         SoundManager.PlayClick();
