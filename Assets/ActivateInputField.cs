@@ -8,6 +8,8 @@ public class ActivateInputField : MonoBehaviour {
 
     public List<GameObject> toToggle;
 
+    public bool DogName;
+
     //TODO: add a confirm button, so players can type in no name and not any failuers.
 	void OnEnable() {
 		inputField = GetComponent<InputField> ();
@@ -18,7 +20,10 @@ public class ActivateInputField : MonoBehaviour {
             if (string.IsNullOrEmpty(inputField.text))
                 return;
 
-            GameManager.SetName(inputField.text);
+            if (DogName)
+                GameManager.PlayerDog.dogName = inputField.text;
+            else
+                GameManager.SetName(inputField.text);
 
             foreach (var go in toToggle)
             {
