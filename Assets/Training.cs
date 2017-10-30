@@ -10,6 +10,13 @@ public class Training : MonoBehaviour {
 	float maxVal = 100f;
 	float minVal = 0f;
 	float curVal = 50f;
+    public TrainingType Type;
+
+    //TODO: Make all ability stats into enums in Dog and use those
+    public enum TrainingType
+    {
+        Strength, Bite, Aggression, Speed
+    }
 
 	Coroutine co;
 
@@ -28,6 +35,25 @@ public class Training : MonoBehaviour {
 			if (curVal >= maxVal) {
 				gameObject.SetActive (false);
 				scene.SetActive (true);
+			    switch (Type)
+			    {
+                    case TrainingType.Aggression:
+			            GameManager.PlayerDog.strength++;
+			            break;
+                    case TrainingType.Bite:
+			            GameManager.PlayerDog.bite++;
+			            break;
+                    case TrainingType.Speed:
+			            GameManager.PlayerDog.speed++;
+                        break;
+                    case TrainingType.Strength:
+			            GameManager.PlayerDog.strength++;
+			            break;
+                    default:
+			            break;
+
+			    }
+
 				break;
 			}
 			curVal -= decay * Time.deltaTime;

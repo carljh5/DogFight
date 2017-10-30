@@ -6,6 +6,8 @@ public class DogAnim : MonoBehaviour {
 	Vector3 origPos;
 	Vector3 origScale;
 
+    private List<GameObject> InstantiatedObjects = new List<GameObject>();
+
 	public GameObject blood;
 
 	public enum animType {
@@ -23,7 +25,7 @@ public class DogAnim : MonoBehaviour {
 		case animType.Hit:
 				StartCoroutine (HitRoutine ());
 				if (blood.activeSelf)
-					Instantiate (blood, blood.transform.position, Quaternion.Euler (new Vector3 (0, 0, Random.Range (0, 359))), blood.transform.parent);
+					InstantiatedObjects.Add( Instantiate (blood, blood.transform.position, Quaternion.Euler (new Vector3 (0, 0, Random.Range (0, 359))), blood.transform.parent));
 				blood.SetActive (true);
 				break;
 			case animType.Attack:
@@ -33,13 +35,7 @@ public class DogAnim : MonoBehaviour {
 				break;
 		}
 	}
-
-	public void Play() {
-		StartCoroutine (HitRoutine());
-		if (blood.activeSelf)
-			Instantiate (blood, blood.transform.position, Quaternion.Euler (new Vector3 (0, 0, Random.Range (0, 359))), blood.transform.parent);
-		blood.SetActive (true);
-	}
+    
 
 	IEnumerator HitRoutine() {
 		Vector2 rand;
@@ -63,4 +59,14 @@ public class DogAnim : MonoBehaviour {
 		}
 		transform.localScale = origScale;
 	}
+
+    public void CleanUp()
+    {
+        blood.SetActive(false);
+
+        foreach (var go in InstantiatedObjects)
+        {
+            Destroy(go);
+        }
+    }
 }

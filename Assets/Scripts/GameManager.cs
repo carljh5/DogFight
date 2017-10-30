@@ -83,6 +83,8 @@ public class GameManager : MonoBehaviour
 
         fightManager.dog1 = PlayerDog;
         fightManager.dog2 = EnemyDogs[nextEnemyDogIdx++];
+
+        FightPresentation.Reset();
     }
 
     public static void SetName(string name)

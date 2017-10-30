@@ -19,7 +19,6 @@ public class Dog : MonoBehaviour
     [HideInInspector]
     public Image healthBar;
     public delegate IEnumerator OnStrengthChangeDelegate(float newValue,float oldValue);
-    public event OnStrengthChangeDelegate OnStrengthChange;
 
     private float m_currentStrength;
     [HideInInspector]

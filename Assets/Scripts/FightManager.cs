@@ -13,6 +13,8 @@ public class FightManager : MonoBehaviour
 
     public Dog dog1, dog2;
 
+    private DogAnim dog1Anim, dog2Anim;
+
     public Image dog1HealthBar, dog2HealthBar;
 
     public Text Dog1Text, Dog2Text;
@@ -28,6 +30,8 @@ public class FightManager : MonoBehaviour
 	public string feedbackStr = "";
 
 	public FeedbackManager feedback;
+
+    public GameObject[] ToggleAfterMatch;
 
     public enum FightAction
     {
@@ -48,6 +52,15 @@ public class FightManager : MonoBehaviour
     {
         dog1 = GameManager.PlayerDog;
         dog2 = GameManager.GetNextEnemy();
+
+        dog1.currentStrength = dog1.strength;
+        dog2.currentStrength = dog2.strength;
+
+        dog1Anim = dog1.GetComponent<DogAnim>();
+        dog2Anim = dog2.GetComponent<DogAnim>();
+
+        dog1Anim.blood.SetActive(false);
+        dog2Anim.blood.SetActive(false);
 
         dog1.biteIsLocked = dog2.biteIsLocked = false;
 
@@ -70,8 +83,13 @@ public class FightManager : MonoBehaviour
         dog1.currentStrength = dog1.strength;
         dog2.currentStrength = dog2.strength;
 
+        dog1HealthBar.fillAmount = 1;
+        dog2HealthBar.fillAmount = 1;
+
         dog1.healthBar = dog1HealthBar;
         dog2.healthBar = dog2HealthBar;
+
+        
 
         Dog1Image.sprite = dog1.sprite;
         Dog2Image.sprite = dog2.sprite;
@@ -100,11 +118,13 @@ public class FightManager : MonoBehaviour
         {
             aggressor = dog1;
             victim = dog2;
+            dog1Anim.Play(DogAnim.animType.Attack);
         }
         else
         {
             aggressor = dog2;
             victim = dog1;
+            dog2Anim.Play(DogAnim.animType.Attack);
         }
 
         var value = aggressor.aggression - victim.courage;
@@ -112,7 +132,7 @@ public class FightManager : MonoBehaviour
 		if (value <= 0) 
             return aggressor + " barks vicously, frightening the closest spectators, " +
                    "but " + victim + " seems unaffected.";
-			
+        
 
         victim.currentStrength -= value;
 
@@ -125,45 +145,74 @@ public class FightManager : MonoBehaviour
     {
         Dog firstDog, seconDog;
 
+        DogAnim animation, secondAnim;
+
         //  ----------------- SPEED ROUND --------------------
 
         if (dog1.GetFightSpeed() * Random.value > dog2.GetFightSpeed() * Random.value)
         {
             firstDog = dog1;
             seconDog = dog2;
+            animation = dog1Anim;
+            secondAnim = dog2Anim;
         }
         else
         {
             seconDog = dog1;
             firstDog = dog2;
+            animation = dog2Anim;
+            secondAnim = dog1Anim;
         }
+
+        var str = seconDog.currentStrength;
+
         yield return new WaitForSeconds(waitSeconds);
 
+        if(!firstDog.biteIsLocked)
+            animation.Play(DogAnim.animType.Hit);
+
         var wait = sound.PlayBite();
-        
-		feedback.Feed (Bite(firstDog, seconDog));
+
+        feedback.Feed(Bite(firstDog, seconDog));
 
         yield return new WaitForSeconds(wait);
 
-        yield return new WaitForSeconds(sound.PlayWhine());
-        
-        if (!seconDog.alive)
+        //if it got injured
+        if (seconDog.currentStrength < str)
         {
+            secondAnim.Play(DogAnim.animType.Hit);
 
-            fightRunning = false;
-			yield return new WaitForSeconds (waitSeconds);
-			feedback.StopFeed ();
-            yield break;
+            yield return new WaitForSeconds(sound.PlayWhine());
         }
+        if(!seconDog.alive)
+            {
+
+                fightRunning = false;
+			    yield return new WaitForSeconds (waitSeconds);
+			    feedback.StopFeed ();
+                yield break;
+            }
         yield return new WaitForSeconds(waitSeconds);
 
         wait = sound.PlayBite();
 
-		feedback.Feed (Bite (seconDog, firstDog));
+        str = firstDog.currentStrength;
+
+        if(!seconDog.biteIsLocked)
+            secondAnim.Play(DogAnim.animType.Hit);
+
+
+        feedback.Feed (Bite (seconDog, firstDog));
 
         yield return new WaitForSeconds(wait);
 
-        yield return new WaitForSeconds(sound.PlayWhine());
+        //if it got injured
+        if (firstDog.currentStrength < str)
+        {
+            animation.Play(DogAnim.animType.Hit);
+
+            yield return new WaitForSeconds(sound.PlayWhine());
+        }
 
         if (!firstDog.alive)
         {
@@ -190,7 +239,7 @@ public class FightManager : MonoBehaviour
     {
 
         if(!fightRunning)
-             throw new ExecutionEngineException("Calling round while fight is not running. Are the dogs still alive?");
+            EndFight();
         
         // ACTION RESOLUTION
         ResolvePlayerAction(chosenAction);
@@ -272,8 +321,8 @@ public class FightManager : MonoBehaviour
         else
         {
             //USE THIS IF FIGHTS SHOULD BE LESS RANDOM
-            if (attacker.GetFightBite()/1.5 > victimDog.currentStrength)
-                victimDog.currentStrength -= (attacker.GetFightBite()/1.5f) - victimDog.currentStrength;
+            if (attacker.GetFightBite() > victimDog.currentStrength)
+                victimDog.currentStrength -= (attacker.GetFightBite() ) - victimDog.currentStrength;
 
             stringBuilder.AppendLine(attacker + " bites " + victimDog + ".");
             
@@ -287,5 +336,15 @@ public class FightManager : MonoBehaviour
         return stringBuilder.ToString();
     }
 
+    private void EndFight()
+    {
+        dog1Anim.CleanUp();
+        dog2Anim.CleanUp();
+
+        foreach (var go in ToggleAfterMatch)
+        {
+            go.SetActive(!go.activeSelf);
+        }
+    }
     
 }

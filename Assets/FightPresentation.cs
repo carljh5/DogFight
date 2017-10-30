@@ -7,8 +7,17 @@ public class FightPresentation : MonoBehaviour
 {
     public Image EnemyImage, PlayerImage;
     public Text EnemyText, PlayerText;
+    private static FightPresentation instance;
 
     void OnEnable()
+    {
+        if (instance == null)
+            instance = this;
+
+        setDogs();
+    }
+
+    private void setDogs()
     {
         var e = GameManager.GetNextEnemy();
         var p = GameManager.PlayerDog;
@@ -21,5 +30,10 @@ public class FightPresentation : MonoBehaviour
         EnemyText.text = e.dogName + ", the " + e.race.ToString();
 
         PlayerText.text = p.dogName + ", the " + p.race.ToString();
+    }
+
+    public static void Reset()
+    {
+        instance.setDogs();
     }
 }
