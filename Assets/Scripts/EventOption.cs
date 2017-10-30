@@ -17,12 +17,13 @@ public class EventOption : MonoBehaviour
     {
         if (Scene != null)
         {
-            Scene.SetActive(true);
             PreviousScene.SetActive(false);
+            Scene.SetActive(true);
         }
 
         GameManager.OptionSelected(Event);
 
-        OptionPanel.SetActive(false);
+        if(Scene.GetComponent<SceneSelection>() == null )
+            OptionPanel.SetActive(false);
     }
 }
