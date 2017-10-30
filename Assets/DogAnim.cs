@@ -40,6 +40,7 @@ public class DogAnim : MonoBehaviour {
 	IEnumerator HitRoutine() {
 		Vector2 rand;
 		float time = 0;
+		Handheld.Vibrate ();
 		while (time < 0.7f) {
 			rand = Random.insideUnitCircle * 10f;
 			transform.position = new Vector3 (origPos.x+rand.x, origPos.y+rand.y, origPos.z);
