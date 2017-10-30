@@ -13,7 +13,7 @@ public class FightManager : MonoBehaviour
 
     public Dog dog1, dog2;
 
-    private DogAnim dog1Anim, dog2Anim;
+    public DogAnim dog1Anim, dog2Anim;
 
     public Image dog1HealthBar, dog2HealthBar;
 
@@ -56,9 +56,7 @@ public class FightManager : MonoBehaviour
 
         dog1.currentStrength = dog1.strength;
         dog2.currentStrength = dog2.strength;
-
-        dog1Anim = dog1.GetComponent<DogAnim>();
-        dog2Anim = dog2.GetComponent<DogAnim>();
+        
 
         dog1Anim.blood.SetActive(false);
         dog2Anim.blood.SetActive(false);
@@ -170,7 +168,7 @@ public class FightManager : MonoBehaviour
         yield return new WaitForSeconds(waitSeconds);
 
         if(!firstDog.biteIsLocked)
-            animation.Play(DogAnim.animType.Hit);
+            animation.Play(DogAnim.animType.Attack);
 
         var wait = sound.PlayBite();
 
@@ -185,7 +183,12 @@ public class FightManager : MonoBehaviour
 
             yield return new WaitForSeconds(sound.PlayWhine());
         }
-        if(!seconDog.alive)
+        else
+        {
+            feedback.Feed("The bite does not seem to injur " + seconDog.dogName);
+        }
+
+        if (!seconDog.alive)
             {
 
                 fightRunning = false;
@@ -200,7 +203,7 @@ public class FightManager : MonoBehaviour
         str = firstDog.currentStrength;
 
         if(!seconDog.biteIsLocked)
-            secondAnim.Play(DogAnim.animType.Hit);
+            secondAnim.Play(DogAnim.animType.Attack);
 
 
         feedback.Feed (Bite (seconDog, firstDog));
@@ -213,6 +216,10 @@ public class FightManager : MonoBehaviour
             animation.Play(DogAnim.animType.Hit);
 
             yield return new WaitForSeconds(sound.PlayWhine());
+        }
+        else
+        {
+            feedback.Feed("The bite does not seem to injur " + firstDog.dogName);
         }
 
         if (!firstDog.alive)
