@@ -32,6 +32,7 @@ public class FightManager : MonoBehaviour
 	public FeedbackManager feedback;
 
     public GameObject[] ToggleAfterMatch;
+    public GameObject[] ToggleAfterDefeat;
 
     public enum FightAction
     {
@@ -239,7 +240,10 @@ public class FightManager : MonoBehaviour
     {
 
         if(!fightRunning)
-            EndFight();
+            if(!GameManager.PlayerDog.alive)
+                Defeat();
+            else
+                EndFight();
         
         // ACTION RESOLUTION
         ResolvePlayerAction(chosenAction);
@@ -346,5 +350,15 @@ public class FightManager : MonoBehaviour
             go.SetActive(!go.activeSelf);
         }
     }
-    
+    private void Defeat()
+    {
+        dog1Anim.CleanUp();
+        dog2Anim.CleanUp();
+
+        foreach (var go in ToggleAfterDefeat)
+        {
+            go.SetActive(!go.activeSelf);
+        }
+    }
+
 }
