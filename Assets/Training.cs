@@ -38,7 +38,7 @@ public class Training : MonoBehaviour {
 			    switch (Type)
 			    {
                     case TrainingType.Aggression:
-			            GameManager.PlayerDog.strength++;
+			            GameManager.PlayerDog.aggression++;
 			            break;
                     case TrainingType.Bite:
 			            GameManager.PlayerDog.bite++;
