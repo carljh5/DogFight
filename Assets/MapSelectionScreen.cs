@@ -7,20 +7,25 @@ public class MapSelectionScreen : MonoBehaviour {
 	//private MapClic
 	private MapClickableManager clickMan;
 
-	public enum Option
+	/*public enum Option
 	{
 		Train,
 		Breed,
 		Catch,
-		Fight
-	}
+		Fight,
+		Story
+	}*/
 
-	[SerializeField]
-	public Option[] Clickables;
+	public MapClickableManager.ClickableProperty[] clickableProperties;
+
+	//[SerializeField]
+	//public Option[] Clickables;
 
 	void OnEnable() {
 		clickMan = mapGameObject.GetComponent<MapClickableManager> ();
-		//doStuff
+		clickMan.gameObject.SetActive (true);
+		clickMan.SetScreen (clickableProperties);
+		gameObject.SetActive (false);
 	}
 
 
