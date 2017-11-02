@@ -111,7 +111,7 @@ public class SoundManager : MonoBehaviour
 
     public static void PlayClick()
     {
-        instance.SfxAudioSource.PlayOneShot(instance.clickSound,0.5f);
+        instance.SfxAudioSource.PlayOneShot(instance.clickSound,0.3f);
     }
 
     public static void PlayPopUp()
