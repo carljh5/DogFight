@@ -21,7 +21,7 @@ public class ActivateInputField : MonoBehaviour {
                 return;
 
             if (DogName)
-                GameManager.PlayerDog.dogName = inputField.text;
+                GameManager.SetDogName(inputField.text);
             else
                 GameManager.SetName(inputField.text);
 

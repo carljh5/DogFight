@@ -215,6 +215,7 @@ public class FightManager : MonoBehaviour
         {
             animation.Play(DogAnim.animType.Hit);
 
+            //TODO: only if hurt enough, maybe make a slight injury sound
             yield return new WaitForSeconds(sound.PlayWhine());
         }
         else

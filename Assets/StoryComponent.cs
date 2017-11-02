@@ -20,10 +20,10 @@ public class StoryComponent : MonoBehaviour {
 		
         SoundManager.PlayClick();
 		if (index < paragraphs.Length) {
-			if (display.Play (paragraphs [index])) 
+			if (display.Play (GameManager.Clean(paragraphs[index])))
 				index++;
 		} else {
-			if(display.Play (paragraphs [index-1])) 
+			if(display.Play (GameManager.Clean(paragraphs [index-1]))) 
 			{
 				foreach (GameObject go in panelsToToggle) {
 					go.SetActive (go.activeSelf ? false : true);

@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -17,13 +20,28 @@ public class GameManager : MonoBehaviour
 
     public static string PlayerName;
 
-    public static Dog PlayerDog;
+    public static Dog PlayerDog { get; private set; }
 
     public static bool LeashDog;
     
     public Dog[] EnemyDogs;
 
     public Dog[] Dogs;
+
+    //[Serializable]
+    //public struct KeyVal
+    //{
+    //    public string Key;
+    //    public string Value;
+    //}
+
+    //public KeyVal[] EscapeKeyValuePairs;
+
+    [Header("EscapeWords")]
+    public string PlayerNameEscapeWord = "@playerName";
+    public string DogNameEscapeWord = "@dogName";
+
+    private Dictionary<string,string> EscapeWords = new Dictionary<string, string>();
 
     private static GameManager instance;
 
@@ -38,6 +56,12 @@ public class GameManager : MonoBehaviour
 
         //TODO: Delete this later:
         PlayerDog = instance.Dogs[0];
+
+        
+        //foreach (var kv in EscapeKeyValuePairs)
+        //{
+        //    EscapeWords[kv.Key] = kv.Value;
+        //}
 
         Debug.Log("Game manager initialized.");
     }
@@ -94,11 +118,45 @@ public class GameManager : MonoBehaviour
         else
             PlayerName = name;
 
+        instance.EscapeWords[instance.PlayerNameEscapeWord] = PlayerName;
+
         Debug.Log("Player is called " + PlayerName);
     }
 
+
+    public static void SetDogName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            PlayerDog.dogName = "Chicharito";
+        else
+            PlayerDog.dogName = name;
+
+        instance.EscapeWords[instance.DogNameEscapeWord] = PlayerDog.dogName;
+
+        Debug.Log("Dog is called " + PlayerName);
+    }
+    
     public static Dog GetNextEnemy()
     {
         return instance.EnemyDogs[instance.nextEnemyDogIdx];
+    }
+
+    public static string Clean( string s)
+    {
+        StringBuilder returnstring = new StringBuilder();
+
+        foreach (var word in s.Split(' '))
+        {
+            if (instance.EscapeWords.ContainsKey(word))
+            {
+                returnstring.Append(instance.EscapeWords[word] + " ");
+            }
+            else
+            {
+                returnstring.Append(word + " ");
+            }
+        }
+
+        return returnstring.ToString();
     }
 }
