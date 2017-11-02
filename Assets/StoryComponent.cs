@@ -6,16 +6,16 @@ public class StoryComponent : MonoBehaviour {
 	public string[] paragraphs; 
 	public TextAnim display;
 	public GameObject[] panelsToToggle;
+    public SoundManager.BackgroundSound BackgroundSound;
 
 	private int index = 0;
 
 	void OnEnable() {
+        display.Clear();
 		Next ();
-        SoundManager.SetBackgroundSound(SoundManager.BackgroundSound.Start);
+        SoundManager.SetBackgroundSound(BackgroundSound);
     }
 
-
-    //TODO: check for escape characters like "/playername" and replace it with the relevant from the game manager.
 	public void Next() {
 		
         SoundManager.PlayClick();
@@ -29,6 +29,9 @@ public class StoryComponent : MonoBehaviour {
 					go.SetActive (go.activeSelf ? false : true);
 				}
 				gameObject.SetActive (false);
+                //Not really working :
+			    index = 0;
+                display.Clear();
 			}
 		}
 	}

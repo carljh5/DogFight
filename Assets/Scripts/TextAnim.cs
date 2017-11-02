@@ -43,6 +43,12 @@ public class TextAnim : MonoBehaviour {
 		}
 	}
 
+    public void Clear()
+    {
+        text.text = "";
+        bufString = "";
+    }
+
 
 	IEnumerator StringAnim(string str) {
 		isAnimPlaying = true;
