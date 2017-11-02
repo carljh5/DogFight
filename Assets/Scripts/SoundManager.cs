@@ -50,8 +50,6 @@ public class SoundManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        
-        BackgroundAudioSource.loop = true;
 
         backgroundSounds = new Dictionary<BackgroundSound, AudioClip>();
 

@@ -45,7 +45,6 @@ public class TextAnim : MonoBehaviour {
 
     public void Clear()
     {
-        text.text = "";
         bufString = "";
     }
 
