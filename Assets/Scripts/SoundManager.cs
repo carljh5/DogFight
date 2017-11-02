@@ -41,17 +41,17 @@ public class SoundManager : MonoBehaviour
         Fight0
     }
 
-    private AudioSource audioSource;
-    private AudioSource backgroundAudioSource;
+    [Header("Audio Sources")]
+    public AudioSource TextAudioSource;
+    public AudioSource BackgroundAudioSource;
+    public AudioSource SfxAudioSource;
 
 
     void Awake()
     {
         instance = this;
-
-        audioSource = GetComponent<AudioSource>();
-        backgroundAudioSource = gameObject.AddComponent<AudioSource>();
-        backgroundAudioSource.loop = true;
+        
+        BackgroundAudioSource.loop = true;
 
         backgroundSounds = new Dictionary<BackgroundSound, AudioClip>();
 
@@ -78,11 +78,11 @@ public class SoundManager : MonoBehaviour
 
         instance.currentBackground = background;
 
-        instance.backgroundAudioSource.volume = volume;
+        instance.BackgroundAudioSource.volume = volume;
 
-        instance.backgroundAudioSource.clip = instance.backgroundSounds[background];
+        instance.BackgroundAudioSource.clip = instance.backgroundSounds[background];
 
-        instance.backgroundAudioSource.Play();
+        instance.BackgroundAudioSource.Play();
     }
 
     public static BackgroundSound GetBackgroundSound()
@@ -92,38 +92,38 @@ public class SoundManager : MonoBehaviour
 
     private void startTextSound()
     {
-        audioSource.clip = textAudio;
-        audioSource.loop = true;
-        audioSource.volume = textVolume;
-        audioSource.Play();
+        TextAudioSource.clip = textAudio;
+        TextAudioSource.loop = true;
+        TextAudioSource.volume = textVolume;
+        TextAudioSource.Play();
     }
 
     private void stopTextSound()
     {
-        if (audioSource.clip == textAudio)
+        if (TextAudioSource.clip == textAudio)
         {
-            audioSource.clip = null;
-            audioSource.Stop();
-            audioSource.loop = false;
+            TextAudioSource.clip = null;
+            TextAudioSource.Stop();
+            TextAudioSource.loop = false;
         }
 
     }
 
     public static void PlayClick()
     {
-        instance.audioSource.PlayOneShot(instance.clickSound);
+        instance.SfxAudioSource.PlayOneShot(instance.clickSound,0.5f);
     }
 
     public static void PlayPopUp()
     {
-        instance.audioSource.PlayOneShot(instance.popUp);
+        instance.SfxAudioSource.PlayOneShot(instance.popUp);
     }
 
     public float  PlayBite()
     {
         var x = (int)(bites.Length * Random.value);
 
-         audioSource.PlayOneShot(bites[x]);
+        SfxAudioSource.PlayOneShot(bites[x]);
 
         return bites[x].length;
     }
@@ -132,7 +132,7 @@ public class SoundManager : MonoBehaviour
     {
         var x = (int)(whines.Length * Random.value);
 
-        audioSource.PlayOneShot(whines[x]);
+        SfxAudioSource.PlayOneShot(whines[x]);
         return whines[x].length;
     }
 
@@ -140,7 +140,7 @@ public class SoundManager : MonoBehaviour
     {
         var x = (int)(barks.Length * Random.value);
 
-        audioSource.PlayOneShot(barks[x]);
+        SfxAudioSource.PlayOneShot(barks[x]);
         return barks[x].length;
     }
 }
