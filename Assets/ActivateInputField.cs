@@ -14,7 +14,9 @@ public class ActivateInputField : MonoBehaviour {
 	void OnEnable() {
 		inputField = GetComponent<InputField> ();
 		inputField.ActivateInputField ();
-        
+	    inputField.characterLimit = 24;
+            // = Exterminator the Mad Dog
+
         inputField.onEndEdit.AddListener(delegate
         {
             if (string.IsNullOrEmpty(inputField.text))
