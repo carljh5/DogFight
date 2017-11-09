@@ -143,6 +143,11 @@ public class SoundManager : MonoBehaviour
         return barks[x].length;
     }
 
+    public static void PlaySound(AudioClip sound)
+    {
+        instance.SfxAudioSource.PlayOneShot(sound);
+    }
+
     public void FadeDownBackground()
     {
         StartCoroutine(FadeDownBackgroundRoutine());
