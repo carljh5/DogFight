@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapClickableManager : MonoBehaviour {
 	[SerializeField]
@@ -64,9 +65,11 @@ public class MapClickableManager : MonoBehaviour {
 		RectTransform clickableRT = clickable.GetComponent<RectTransform> ();
 		float clickableWidth = clickableRT.rect.width;
 		float clickableHeight = clickableRT.rect.height;
-		float padding = 50f;
-		int divX = Mathf.FloorToInt(Screen.width / clickableWidth);
-		int divY = Mathf.FloorToInt (Screen.height/clickableHeight);
+		float padding = 20f;
+	    var screenSize = GetComponentInParent<CanvasScaler>().referenceResolution;
+
+		int divX = Mathf.FloorToInt(screenSize.y / (clickableWidth));
+		int divY = Mathf.FloorToInt (screenSize.x/(clickableHeight));
 		List<Vector3> positions = new List<Vector3>();
 		for (int x = 0; x < divX; x++) {
 			for (int y = 0; y < divY; y++) {
