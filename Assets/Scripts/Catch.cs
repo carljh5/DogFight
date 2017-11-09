@@ -8,6 +8,8 @@ public class Catch: MonoBehaviour {
 	public RectTransform marker;
 	public float speed = 20f;
 	public bool isCatchAble;
+    public Animator LassoAnimator;
+    public GameObject FailScene;
 
 	Coroutine co;
 
@@ -15,11 +17,22 @@ public class Catch: MonoBehaviour {
 		co = StartCoroutine (MarkerRoutine());
 	}
 
-	public bool Throw() {
+	public void Throw() {
 		if(co!=null)
 			StopCoroutine (co);
-		return isCatchAble;
+        
+        LassoAnimator.Play("LassoThrow");
+	    StartCoroutine(SwitchToScene());
 	}
+
+    public IEnumerator SwitchToScene()
+    {
+        SoundManager.PlayThrow();
+        yield return new WaitForSeconds(1);
+
+        FailScene.SetActive(true);
+        gameObject.SetActive(false);
+    }
 
 	IEnumerator MarkerRoutine() {
 		float barSizeX = bar.rect.size.x/2f;

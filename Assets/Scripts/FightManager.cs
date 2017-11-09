@@ -312,10 +312,10 @@ public class FightManager : MonoBehaviour
 
         var roll = Random.value;
 
-        roll = victimDog.biteIsLocked ? roll * 0.75f : roll;
+        roll = victimDog.biteIsLocked ? roll * 0.60f : roll;
 
 
-        if (roll < 0.1)
+        if (roll < 0.2)
         {
             stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
 
@@ -333,8 +333,7 @@ public class FightManager : MonoBehaviour
         else
         {
             //USE THIS IF FIGHTS SHOULD BE LESS RANDOM
-            if (attacker.GetFightBite() > victimDog.currentStrength)
-                victimDog.currentStrength -= (attacker.GetFightBite() ) - victimDog.currentStrength;
+            victimDog.currentStrength -= (attacker.GetFightBite()*roll /3);
 
             stringBuilder.AppendLine(attacker + " bites " + victimDog + ".");
             

@@ -21,6 +21,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip textAudio;
     public float textVolume = 0.05f;
     public AudioClip clickSound;
+    public AudioClip throwSound;
 
     [Header("Background sounds")]
     public AudioClip fightBackground;
@@ -118,6 +119,13 @@ public class SoundManager : MonoBehaviour
         instance.SfxAudioSource.PlayOneShot(instance.popUp);
     }
 
+    public static void PlayThrow()
+    {
+        
+        instance.SfxAudioSource.PlayOneShot(instance.throwSound);
+        
+    }
+
     public float  PlayBite()
     {
         var x = (int)(bites.Length * Random.value);
@@ -155,7 +163,6 @@ public class SoundManager : MonoBehaviour
 
     private IEnumerator FadeDownBackgroundRoutine()
     {
-        Debug.Log("Start fade " + Time.time);
 
         var t = Time.time;
         var vol = BackgroundAudioSource.volume;
@@ -168,7 +175,6 @@ public class SoundManager : MonoBehaviour
         }
         BackgroundAudioSource.Stop();
         currentBackground = BackgroundSound.NoSound;
-
-        Debug.Log("Fade finished" + Time.time);
+        
     }
 }
