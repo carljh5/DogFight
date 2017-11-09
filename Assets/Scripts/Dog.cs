@@ -72,7 +72,8 @@ public class Dog : MonoBehaviour
         EnglishBullTerrier,
         Rottweiler,
         AmericanPitbullTerrier,
-        Chihuahua
+        Chihuahua,
+        Coonhound
     }
     
 
