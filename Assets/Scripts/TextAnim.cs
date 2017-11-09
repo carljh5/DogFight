@@ -50,16 +50,35 @@ public class TextAnim : MonoBehaviour {
 
 
 	IEnumerator StringAnim(string str) {
+		
+
+
+
 		isAnimPlaying = true;
 		int charCount = str.Length;
 		int index = 0;
+		int line = 1;
 		if(text == null)
 			text = GetComponent<Text> ();
 		if (text != null) {
+			TextGenerator tG = text.cachedTextGenerator;
+			TextGenerationSettings tGSettings = text.GetGenerationSettings (GetComponent<RectTransform>().rect.size);
+			tG.Populate (str, tGSettings);
+			IList<UILineInfo> lineInfo = text.cachedTextGenerator.lines;
+
             SoundManager.StartTextSound();
 			text.text = "";
 			while (text.text.Length < charCount) {
 				yield return new WaitForSeconds (speedOfTyping);
+
+				if (index == lineInfo [line].startCharIdx) {
+					text.text += "\n";
+					if (line + 1 < lineInfo.Count) {
+						line++;
+					}
+				}
+
+
 				text.text += str.Substring (index, 1);
 				index++;
 			}
