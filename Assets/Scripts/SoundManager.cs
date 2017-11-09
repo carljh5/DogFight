@@ -150,7 +150,7 @@ public class SoundManager : MonoBehaviour
 
     private IEnumerator FadeDownBackgroundRoutine()
     {
-        Debug.Log("Start fade");
+        Debug.Log("Start fade " + Time.time);
 
         var t = Time.time;
         var vol = BackgroundAudioSource.volume;
@@ -164,6 +164,6 @@ public class SoundManager : MonoBehaviour
         BackgroundAudioSource.Stop();
         currentBackground = BackgroundSound.NoSound;
 
-        Debug.Log("Fade finished");
+        Debug.Log("Fade finished" + Time.time);
     }
 }
