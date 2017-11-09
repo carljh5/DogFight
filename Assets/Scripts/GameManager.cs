@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,9 @@ public class GameManager : MonoBehaviour
         Dog3Selected,
         LeashDog,
         UnleashDog,
-        GoToNextFight
+        GoToNextFight,
+        NoAction,
+        RestartGame
     }
 
     public static string PlayerName;
@@ -89,6 +92,11 @@ public class GameManager : MonoBehaviour
                 break;
             case GameEvent.GoToNextFight:
                 instance.GoToNextFight();
+                break;
+            case GameEvent.NoAction:
+                break;
+            case GameEvent.RestartGame:
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case GameEvent.IllegalEvent:
             default:

@@ -35,7 +35,7 @@ public class SceneSelection : SelectionScreen
 
         optionGameObject.SetActive(true);
 
-        QuestionTextComponent.text = question;
+        QuestionTextComponent.text = GameManager.Clean(question);
 
         foreach (var opt in options)
         {
@@ -43,7 +43,7 @@ public class SceneSelection : SelectionScreen
 
             obj.SetActive(true);
 
-            obj.GetComponentInChildren<Text>().text = opt.text;
+            obj.GetComponentInChildren<Text>().text = GameManager.Clean(opt.text);
 
             if (opt.image != null)
                 obj.GetComponentInChildren<Image>().sprite = opt.image;

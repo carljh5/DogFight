@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectionScreen : MonoBehaviour
+public abstract class SelectionScreen : MonoBehaviour
 {
     public EventOption OptionEntry;
     public GameObject optionGameObject;

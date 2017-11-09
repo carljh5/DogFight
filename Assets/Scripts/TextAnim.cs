@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TextAnim : MonoBehaviour {
 
 
-	public float speedOfTyping = 0.05f;
+	public float speedOfTyping = 0.10f;
 	private Coroutine co;
 	private bool isAnimPlaying;
 	private string bufString = "";
@@ -30,7 +30,7 @@ public class TextAnim : MonoBehaviour {
 
 	public bool Play(string str) {
 		if (!isAnimPlaying) {
-			bufString = str;
+			bufString = GameManager.Clean(str);
 			co = StartCoroutine (StringAnim (bufString));
 			return true;
 		} else {
