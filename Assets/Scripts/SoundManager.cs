@@ -27,6 +27,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip startBackground;
     public AudioClip streetBackground0;
     public AudioClip streetBackground1;
+    public float fadeDownTime = 4.0f;
 
     private BackgroundSound currentBackground;
 
@@ -140,5 +141,29 @@ public class SoundManager : MonoBehaviour
 
         SfxAudioSource.PlayOneShot(barks[x]);
         return barks[x].length;
+    }
+
+    public void FadeDownBackground()
+    {
+        StartCoroutine(FadeDownBackgroundRoutine());
+    }
+
+    private IEnumerator FadeDownBackgroundRoutine()
+    {
+        Debug.Log("Start fade");
+
+        var t = Time.time;
+        var vol = BackgroundAudioSource.volume;
+
+        while (BackgroundAudioSource.volume > 0)
+        {
+            BackgroundAudioSource.volume = vol * (1 - (Time.time - t) / fadeDownTime);
+
+            yield return new WaitForFixedUpdate();
+        }
+        BackgroundAudioSource.Stop();
+        currentBackground = BackgroundSound.NoSound;
+
+        Debug.Log("Fade finished");
     }
 }
