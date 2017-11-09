@@ -70,10 +70,9 @@ public class TextAnim : MonoBehaviour {
 			text.text = "";
 			while (text.text.Length < charCount) {
 				yield return new WaitForSeconds (speedOfTyping);
-
-				if (index == lineInfo [line].startCharIdx) {
-					text.text += "\n";
-					if (line + 1 < lineInfo.Count) {
+				if (line < lineInfo.Count) {
+					if (index == lineInfo [line].startCharIdx) {
+						text.text += "\n";
 						line++;
 					}
 				}
