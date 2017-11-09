@@ -98,7 +98,7 @@ public class FightManager : MonoBehaviour
         this.dog1 = dog1;
         this.dog2 = dog2;
 
-        SoundManager.SetBackgroundSound(SoundManager.BackgroundSound.Fight0);
+        SoundManager.SetBackgroundSound(SoundManager.BackgroundSound.Fight0, true);
         
         return "The fight between the " + dog1.race + ", '" + dog1 + "', and the "
             + dog2.race + ", '" + dog2 + "' has started.";
@@ -136,7 +136,7 @@ public class FightManager : MonoBehaviour
         victim.currentStrength -= value;
 
         return aggressor + " barks vicously. " + victim + " looks at its owner, like a scared puppy. " +
-               "How will it be able to deal with the viciousness of " + aggressor + "?";
+               "\nHow will "+victim+" be able to deal with the viciousness of " + aggressor + "?";
 
     }
 

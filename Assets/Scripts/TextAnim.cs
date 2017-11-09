@@ -50,10 +50,6 @@ public class TextAnim : MonoBehaviour {
 
 
 	IEnumerator StringAnim(string str) {
-		
-
-
-
 		isAnimPlaying = true;
 		int charCount = str.Length;
 		int index = 0;

@@ -8,7 +8,6 @@ public class FeedbackManager : MonoBehaviour {
 	private string feedStr;
 	private List<string> feedback = new List<string>();
 	public bool isStreamRunning { get; private set; }
-    public float waitingTime = 4f;
 	private bool runStream;
 
 
@@ -39,7 +38,7 @@ public class FeedbackManager : MonoBehaviour {
 		}
 
 		display.Play (feedStr);
-		yield return new WaitForSeconds (3f);
+		yield return new WaitForSeconds (0.5f + feedStr.Length * 0.03f);
 
 		foreach (GameObject go in panels) {
 			if (go.name.Contains ("Action")) {

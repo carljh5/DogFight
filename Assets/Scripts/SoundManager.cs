@@ -71,7 +71,7 @@ public class SoundManager : MonoBehaviour
         instance.stopTextSound();
     }
 
-    public static void SetBackgroundSound(BackgroundSound background, float volume = 0.05f)
+    public static void SetBackgroundSound(BackgroundSound background, bool loop = false, float volume = 0.05f)
     {
         if (instance.currentBackground == background)
             return;
@@ -79,6 +79,7 @@ public class SoundManager : MonoBehaviour
         instance.currentBackground = background;
 
         instance.BackgroundAudioSource.volume = volume;
+        instance.BackgroundAudioSource.loop = loop;
 
         instance.BackgroundAudioSource.clip = instance.backgroundSounds[background];
 
