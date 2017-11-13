@@ -5,6 +5,7 @@ using UnityEngine;
 public class OnEnablePlaySound : MonoBehaviour
 {
     public AudioClip sound;
+    public int delay;
     
     void OnEnable()
     {
@@ -13,6 +14,12 @@ public class OnEnablePlaySound : MonoBehaviour
             Debug.LogWarning("No sound selected!");
         }
         else
-            SoundManager.PlaySound(sound);
-	}
+            StartCoroutine(PlayDelayed());
+    }
+
+    IEnumerator PlayDelayed()
+    {
+        yield return new WaitForSeconds(delay);
+        SoundManager.PlaySound(sound);
+    }
 }
