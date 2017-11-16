@@ -12,8 +12,9 @@ public class DogAnim : MonoBehaviour {
     private List<GameObject> InstantiatedObjects = new List<GameObject>();
 
 	public GameObject blood;
+    private Color startColor;
 
-	public enum animType {
+    public enum animType {
 		Hit,
 		Attack,
         Death
@@ -22,7 +23,9 @@ public class DogAnim : MonoBehaviour {
 	void Start () {
 		origPos = transform.position;
 		origScale = transform.localScale;
-	}
+        
+        startColor = DogImage.color;
+    }
 
 	public void Play(animType anim) {
 		switch (anim) {
@@ -46,8 +49,6 @@ public class DogAnim : MonoBehaviour {
     IEnumerator DeathRoutine()
     {
         float time = 0;
-        var startPos = transform.position;
-        var startColor = DogImage.color;
         var xColor = startColor;
 
         float runTime = 2f;
@@ -58,7 +59,7 @@ public class DogAnim : MonoBehaviour {
 
             DogImage.color = xColor;
             
-            transform.position = new Vector3(transform.position.x, startPos.y + 100* time / runTime, transform.position.z);
+            transform.position = new Vector3(transform.position.x, origPos.y + 100* time / runTime, transform.position.z);
             time += Time.deltaTime;
             yield return null;
         }
@@ -92,6 +93,9 @@ public class DogAnim : MonoBehaviour {
     public void CleanUp()
     {
         blood.SetActive(false);
+
+        DogImage.color = startColor;
+        transform.position = origPos;
 
         foreach (var go in InstantiatedObjects)
         {
