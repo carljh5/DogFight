@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DogAnim : MonoBehaviour {
 	Vector3 origPos;
 	Vector3 origScale;
+    public Image DogImage;
+
 
     private List<GameObject> InstantiatedObjects = new List<GameObject>();
 
@@ -12,8 +15,9 @@ public class DogAnim : MonoBehaviour {
 
 	public enum animType {
 		Hit,
-		Attack
-	}
+		Attack,
+        Death
+    }
 
 	void Start () {
 		origPos = transform.position;
@@ -31,11 +35,35 @@ public class DogAnim : MonoBehaviour {
 			case animType.Attack:
 				StartCoroutine (AttackRoutine ());
 				break;
+            case animType.Death:
+		        StartCoroutine(DeathRoutine());
+		        break;
 			default:
 				break;
 		}
 	}
-    
+
+    IEnumerator DeathRoutine()
+    {
+        float time = 0;
+        var startPos = transform.position;
+        var startColor = DogImage.color;
+        var xColor = startColor;
+
+        float runTime = 2f;
+
+        while (time < runTime)
+        {
+            xColor.a = startColor.a * (1f - time / runTime);
+
+            DogImage.color = xColor;
+            
+            transform.position = new Vector3(transform.position.x, startPos.y + 100* time / runTime, transform.position.z);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+    }
 
 	IEnumerator HitRoutine() {
 		Vector2 rand;

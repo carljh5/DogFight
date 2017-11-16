@@ -225,9 +225,10 @@ public class FightManager : MonoBehaviour
 
         if (!seconDog.alive)
             {
-
                 fightRunning = false;
-			    yield return new WaitForSeconds (waitSeconds*2);
+			    yield return new WaitForSeconds (waitSeconds);
+                secondAnim.Play(DogAnim.animType.Death);
+                yield return new WaitForSeconds(waitSeconds);
                 Round(FightAction.NoAction);
                 //HideFeedbackWindow();
                 yield break;
@@ -262,6 +263,7 @@ public class FightManager : MonoBehaviour
 
         if (!firstDog.alive)
         {
+            animation.Play(DogAnim.animType.Death);
             fightRunning = false;
 			yield return new WaitForSeconds (waitSeconds*2);
             Round(FightAction.NoAction);
