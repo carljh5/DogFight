@@ -14,6 +14,5 @@ public class AccellerometerParallax : MonoBehaviour {
 	void Update () {
 		Vector3 targetPosition = origPos + ((Quaternion.AngleAxis(45, Vector3.right) * Input.acceleration)* 50f); 
 		transform.position = Vector3.SmoothDamp (transform.position, targetPosition, ref velocity, 0.3f);
-		//print (transform.position);
 	}
 }
