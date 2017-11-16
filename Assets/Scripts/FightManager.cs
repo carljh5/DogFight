@@ -36,6 +36,9 @@ public class FightManager : MonoBehaviour
     
     public GameObject[] ToggleAfterMatch;
     public GameObject[] ToggleAfterDefeat;
+    private bool roundRunning;
+
+    public float AutoPickAfterSeconds;
 
     public enum FightAction
     {
@@ -74,14 +77,14 @@ public class FightManager : MonoBehaviour
 	IEnumerator OpeningRoutine()
 	{
 
-	    var feedStr = StartFight(dog1, dog2);
+        ShowFeedbackWindow();
+        var feedStr = StartFight(dog1, dog2);
 
         display.Play(feedStr);
-        ShowFeedbackWindow();
-        yield return new WaitForSeconds(0.5f + feedStr.Length * 0.03f);
+        yield return new WaitForSeconds(2f + feedStr.Length * 0.03f);
 	    feedStr = AggressionRound();
         display.Play (feedStr);
-        yield return new WaitForSeconds(0.5f + feedStr.Length * 0.03f);
+        yield return new WaitForSeconds(2.5f + feedStr.Length * 0.03f);
         HideFeedbackWindow();
 	}
 
@@ -89,10 +92,7 @@ public class FightManager : MonoBehaviour
     {
         foreach (GameObject go in panels)
         {
-            go.SetActive(true);
-            if (!go.name.Contains("Feedback"))
-                go.SetActive(false);
-
+            go.SetActive(go.name.Contains("Feedback"));
         }
     }
 
@@ -101,14 +101,7 @@ public class FightManager : MonoBehaviour
 
         foreach (GameObject go in panels)
         {
-            if (go.name.Contains("Action"))
-            {
-                go.SetActive(true);
-            }
-            else
-            {
-                go.SetActive(false);
-            }
+            go.SetActive(go.name.Contains("Action"));
         }
     }
 
@@ -179,7 +172,10 @@ public class FightManager : MonoBehaviour
 
     private IEnumerator RoundRoutine()
     {
-        yield return new WaitForSeconds(0.5f + 0.03f * feedbackStr.Length);
+        roundRunning = true;
+
+        if(feedbackStr.Length > 0)
+            yield return new WaitForSeconds(2f + 0.03f * feedbackStr.Length);
         Dog firstDog, seconDog;
 
         DogAnim animation, secondAnim;
@@ -231,7 +227,7 @@ public class FightManager : MonoBehaviour
             {
 
                 fightRunning = false;
-			    yield return new WaitForSeconds (waitSeconds);
+			    yield return new WaitForSeconds (waitSeconds*2);
                 Round(FightAction.NoAction);
                 //HideFeedbackWindow();
                 yield break;
@@ -267,24 +263,25 @@ public class FightManager : MonoBehaviour
         if (!firstDog.alive)
         {
             fightRunning = false;
-			yield return new WaitForSeconds (waitSeconds);
+			yield return new WaitForSeconds (waitSeconds*2);
             Round(FightAction.NoAction);
             //HideFeedbackWindow();
             yield break;
         }
+        yield return new WaitForSeconds(waitSeconds);
 
         if (seconDog.biteIsLocked && firstDog.biteIsLocked)
         {
             seconDog.biteIsLocked = false;
             firstDog.biteIsLocked = false;
-            yield return new WaitForSeconds(waitSeconds);
 
             display.Play ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
-        }
-		yield return new WaitForSeconds (waitSeconds);
-        HideFeedbackWindow();
 
+            yield return new WaitForSeconds(waitSeconds + 6);
+        }
         HideFeedbackWindow();
+        StartCoroutine(PickAfterSeconds(AutoPickAfterSeconds));
+
     }
 
 
@@ -395,6 +392,19 @@ public class FightManager : MonoBehaviour
         }
 
         return stringBuilder.ToString();
+    }
+
+    private IEnumerator PickAfterSeconds(float seconds)
+    {
+        roundRunning = false;
+
+        yield return new WaitForSeconds(seconds);
+
+        if (!roundRunning)
+        {
+            feedbackStr = "";
+            StartCoroutine(RoundRoutine());
+        }
     }
 
     private void EndFight()
