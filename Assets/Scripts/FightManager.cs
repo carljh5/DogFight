@@ -30,7 +30,7 @@ public class FightManager : MonoBehaviour
 
     private static readonly float waitSeconds = 4f;
 
-    private static readonly float biteLockStrengthDecrease = 0.5f;
+    private static readonly float biteLockStrengthDecrease = 0.35f;
 
     public SoundManager sound;
 
@@ -356,7 +356,7 @@ public class FightManager : MonoBehaviour
 
         if (attacker.biteIsLocked)
         {
-            victimDog.currentStrength -= biteLockStrengthDecrease;
+            victimDog.currentStrength -= biteLockStrengthDecrease * attacker.currentStrength;
             return attacker + " still has its jaws locked around the skin of " + victimDog + ".";
         }
         
@@ -374,14 +374,16 @@ public class FightManager : MonoBehaviour
             stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
 
         }
-        else if (attacker.GetFightBite() *roll > victimDog.currentStrength || 
+        else if (attacker.GetFightBite() *roll > victimDog.currentStrength || //if first fight and going poorly for player dog
             (FirstFight &&attacker ==GameManager.PlayerDog 
-                && attacker.currentStrength/attacker.strength<0.2f && victimDog.currentStrength/victimDog.strength < 0.5f))
+                && (attacker.currentStrength/attacker.strength)<0.2f && (victimDog.currentStrength/victimDog.strength )< 0.5f))
         {
+            if(!(attacker.GetFightBite() * roll > victimDog.currentStrength))
+                Debug.Log("Killed by the First Fight Ghost!");
             if (victimDog == GameManager.PlayerDog && FirstFight)
             {
                 stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
-                
+                Debug.Log("Saved by the first fight ghost!");
             }
             else
             {
@@ -402,7 +404,7 @@ public class FightManager : MonoBehaviour
 
             stringBuilder.AppendLine(attacker + " bites " + victimDog + ".");
             
-            if (Random.value > 0.7)
+            if (Random.value > (victimDog.biteIsLocked ? 0.5 : 0.7) )
             {
                 attacker.biteIsLocked = true;
                 stringBuilder.AppendLine("Its jaws locking onto the skin of " + victimDog + "'s neck.");

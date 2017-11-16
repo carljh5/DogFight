@@ -96,7 +96,7 @@ public class DogAnim : MonoBehaviour {
     {
         blood.SetActive(false);
 
-        DogImage.color = startColor;
+        DogImage.color = Color.white;
         transform.position = origPos;
 
         foreach (var go in InstantiatedObjects)
