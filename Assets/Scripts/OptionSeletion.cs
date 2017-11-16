@@ -21,10 +21,20 @@ public class OptionSeletion : SelectionScreen
 	void OnEnable() {
 		if (playOnAwake)
 			ShowOptions ();
-	}
 
+    }
+
+    void OnDisable()
+    {
+        print("Enabling panel;");
+        GameManager.SetPanelActive(true);
+    }
     public override void ShowOptions( )
     {
+
+        print("Disabling panel;");
+        GameManager.SetPanelActive(false);
+
 
         //DELETE OLD ENTRIES
         foreach (var entry in instantiatedEntries)

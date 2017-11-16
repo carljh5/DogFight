@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,6 +31,8 @@ public class GameManager : MonoBehaviour
     public Dog[] EnemyDogs;
 
     public Dog[] Dogs;
+
+    public GameObject TextPanelGameObject;
 
     //[Serializable]
     //public struct KeyVal
@@ -67,6 +70,11 @@ public class GameManager : MonoBehaviour
         //}
 
         Debug.Log("Game manager initialized.");
+    }
+
+    public static void SetPanelActive(bool active)
+    {
+        instance.TextPanelGameObject.SetActive(active);
     }
 
     public static void OptionSelected(GameEvent gameEvent)
