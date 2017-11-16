@@ -9,6 +9,11 @@ using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
 {
+    [Header("Feedback stuff")]
+    public GameObject[] panels;
+    public TextAnim display;
+    
+    [Header("Dog stuff")]
     private bool fightRunning;
 
     public Dog dog1, dog2;
@@ -27,10 +32,8 @@ public class FightManager : MonoBehaviour
 
     public SoundManager sound;
 
-	public string feedbackStr = "";
-
-	public FeedbackManager feedback;
-
+	private string feedbackStr = "";
+    
     public GameObject[] ToggleAfterMatch;
     public GameObject[] ToggleAfterDefeat;
 
@@ -43,6 +46,7 @@ public class FightManager : MonoBehaviour
         UseItem,
         SwitchDog,
         Run,
+        NoAction,
 
 
 
@@ -67,14 +71,47 @@ public class FightManager : MonoBehaviour
         StartCoroutine(OpeningRoutine());
     }
 
-	IEnumerator OpeningRoutine() {
-		feedback.Feed (StartFight(dog1, dog2));
-		yield return new WaitForSeconds (waitSeconds+1f);
-		feedback.Feed (AggressionRound());
-		yield return new WaitForSeconds (waitSeconds+1f);
-		feedback.StopFeed ();
+	IEnumerator OpeningRoutine()
+	{
+
+	    var feedStr = StartFight(dog1, dog2);
+
+        display.Play(feedStr);
+        ShowFeedbackWindow();
+        yield return new WaitForSeconds(0.5f + feedStr.Length * 0.03f);
+	    feedStr = AggressionRound();
+        display.Play (feedStr);
+        yield return new WaitForSeconds(0.5f + feedStr.Length * 0.03f);
+        HideFeedbackWindow();
 	}
-    
+
+    void ShowFeedbackWindow()
+    {
+        foreach (GameObject go in panels)
+        {
+            go.SetActive(true);
+            if (!go.name.Contains("Feedback"))
+                go.SetActive(false);
+
+        }
+    }
+
+    void HideFeedbackWindow()
+    {
+
+        foreach (GameObject go in panels)
+        {
+            if (go.name.Contains("Action"))
+            {
+                go.SetActive(true);
+            }
+            else
+            {
+                go.SetActive(false);
+            }
+        }
+    }
+
     private string StartFight(Dog dog1, Dog dog2)
     {
         fightRunning = true;
@@ -142,6 +179,7 @@ public class FightManager : MonoBehaviour
 
     private IEnumerator RoundRoutine()
     {
+        yield return new WaitForSeconds(0.5f + 0.03f * feedbackStr.Length);
         Dog firstDog, seconDog;
 
         DogAnim animation, secondAnim;
@@ -165,14 +203,14 @@ public class FightManager : MonoBehaviour
 
         var str = seconDog.currentStrength;
 
-        yield return new WaitForSeconds(waitSeconds);
+        ShowFeedbackWindow();
 
         if(!firstDog.biteIsLocked)
             animation.Play(DogAnim.animType.Attack);
 
         var wait = sound.PlayBite();
 
-        feedback.Feed(Bite(firstDog, seconDog));
+        display.Play(Bite(firstDog, seconDog));
 
         yield return new WaitForSeconds(wait);
 
@@ -185,7 +223,8 @@ public class FightManager : MonoBehaviour
         }
         else
         {
-            feedback.Feed("The bite does not seem to injur " + seconDog.dogName);
+            display.Play("The bite does not seem to injur " + seconDog.dogName);
+            yield return new WaitForSeconds(3);
         }
 
         if (!seconDog.alive)
@@ -193,7 +232,8 @@ public class FightManager : MonoBehaviour
 
                 fightRunning = false;
 			    yield return new WaitForSeconds (waitSeconds);
-			    feedback.StopFeed ();
+                Round(FightAction.NoAction);
+                //HideFeedbackWindow();
                 yield break;
             }
         yield return new WaitForSeconds(waitSeconds);
@@ -206,7 +246,7 @@ public class FightManager : MonoBehaviour
             secondAnim.Play(DogAnim.animType.Attack);
 
 
-        feedback.Feed (Bite (seconDog, firstDog));
+        display.Play (Bite (seconDog, firstDog));
 
         yield return new WaitForSeconds(wait);
 
@@ -220,14 +260,16 @@ public class FightManager : MonoBehaviour
         }
         else
         {
-            feedback.Feed("The bite does not seem to injur " + firstDog.dogName);
+            display.Play("The bite does not seem to injur " + firstDog.dogName);
+            yield return new WaitForSeconds(3);
         }
 
         if (!firstDog.alive)
         {
             fightRunning = false;
 			yield return new WaitForSeconds (waitSeconds);
-			feedback.StopFeed ();
+            Round(FightAction.NoAction);
+            //HideFeedbackWindow();
             yield break;
         }
 
@@ -237,26 +279,30 @@ public class FightManager : MonoBehaviour
             firstDog.biteIsLocked = false;
             yield return new WaitForSeconds(waitSeconds);
 
-            feedback.Feed ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
+            display.Play ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
         }
 		yield return new WaitForSeconds (waitSeconds);
-		feedback.StopFeed ();
+        HideFeedbackWindow();
+
+        HideFeedbackWindow();
     }
 
 
     public void Round(FightAction chosenAction)
     {
 
-        if(!fightRunning)
-            if(!GameManager.PlayerDog.alive)
+        if (!fightRunning)
+            if (!GameManager.PlayerDog.alive)
                 Defeat();
             else
                 EndFight();
-        
-        // ACTION RESOLUTION
-        ResolvePlayerAction(chosenAction);
+        else
+        {
+            // ACTION RESOLUTION
+            ResolvePlayerAction(chosenAction);
 
-        StartCoroutine(RoundRoutine());
+            StartCoroutine(RoundRoutine());
+        }
     }
 
     private void ResolvePlayerAction(FightAction action)
@@ -291,11 +337,15 @@ public class FightManager : MonoBehaviour
 				//Debug.Log ("You can not change dogs during this fight.");
 				feedbackStr = "You can not change dogs during this fight.";
                 break;
+            case FightAction.NoAction:
+                feedbackStr = "";
+                return;
             default:
                 break;
         }
-		feedback.Feed(feedbackStr);
-    }
+        ShowFeedbackWindow();
+		display.Play(feedbackStr);
+	}
 
     private static string Bite(Dog attacker, Dog victimDog)
     {
