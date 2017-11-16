@@ -60,6 +60,7 @@ public class Training : MonoBehaviour {
 			    }
 			    successScene.GetComponent<Text>().text = GameManager.Clean("SUCCESS! @dogName gained 1 " + str);
 
+			    decay += 5;
 				break;
 			}
 			curVal -= decay * Time.deltaTime;
