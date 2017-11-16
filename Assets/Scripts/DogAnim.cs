@@ -24,7 +24,6 @@ public class DogAnim : MonoBehaviour {
 		origPos = transform.position;
 		origScale = transform.localScale;
         
-        startColor = DogImage.color;
     }
 
 	public void Play(animType anim) {
@@ -49,6 +48,8 @@ public class DogAnim : MonoBehaviour {
     IEnumerator DeathRoutine()
     {
         float time = 0;
+
+        startColor = DogImage.color;
         var xColor = startColor;
 
         float runTime = 2f;
@@ -79,7 +80,8 @@ public class DogAnim : MonoBehaviour {
 		transform.position = origPos;
 	}
 
-	IEnumerator AttackRoutine() {
+
+    IEnumerator AttackRoutine() {
 		float time = 0;
 		while (time < 0.3f) {
 			float scale = Mathf.Lerp (origScale.y, origScale.y * 1.5f, (1f * time) / 0.3f);

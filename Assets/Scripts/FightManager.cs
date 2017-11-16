@@ -84,7 +84,12 @@ public class FightManager : MonoBehaviour
         yield return new WaitForSeconds(2f + feedStr.Length * 0.03f);
 	    feedStr = AggressionRound();
         display.Play (feedStr);
-        yield return new WaitForSeconds(2.5f + feedStr.Length * 0.03f);
+        yield return new WaitForSeconds(2.5f );
+	    if (feedStr.Contains("scared puppy"))
+	    {
+            sound.PlayWhine();
+	    }
+        yield return new WaitForSeconds(feedStr.Length * 0.03f);
         HideFeedbackWindow();
 	}
 
@@ -203,6 +208,10 @@ public class FightManager : MonoBehaviour
 
         if(!firstDog.biteIsLocked)
             animation.Play(DogAnim.animType.Attack);
+        else
+        {
+            animation.Play(DogAnim.animType.Hit);
+        }
 
         var wait = sound.PlayBite();
 
@@ -216,11 +225,6 @@ public class FightManager : MonoBehaviour
             secondAnim.Play(DogAnim.animType.Hit);
 
             yield return new WaitForSeconds(sound.PlayWhine());
-        }
-        else
-        {
-            display.Play("The bite does not seem to injur " + seconDog.dogName);
-            yield return new WaitForSeconds(3);
         }
 
         if (!seconDog.alive)
@@ -241,6 +245,10 @@ public class FightManager : MonoBehaviour
 
         if(!seconDog.biteIsLocked)
             secondAnim.Play(DogAnim.animType.Attack);
+        else
+        {
+            secondAnim.Play(DogAnim.animType.Hit);
+        }
 
 
         display.Play (Bite (seconDog, firstDog));
@@ -254,11 +262,6 @@ public class FightManager : MonoBehaviour
 
             //TODO: only if hurt enough, maybe make a slight injury sound
             yield return new WaitForSeconds(sound.PlayWhine());
-        }
-        else
-        {
-            display.Play("The bite does not seem to injur " + firstDog.dogName);
-            yield return new WaitForSeconds(3);
         }
 
         if (!firstDog.alive)
