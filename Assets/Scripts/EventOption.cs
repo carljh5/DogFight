@@ -19,9 +19,11 @@ public class EventOption : MonoBehaviour
         {
             PreviousScene.SetActive(false);
             Scene.SetActive(true);
+            
         }
 
         GameManager.OptionSelected(Event);
+        GameManager.SetPanelActive(true);
 
         if(Scene.GetComponent<SceneSelection>() == null )
             OptionPanel.SetActive(false);

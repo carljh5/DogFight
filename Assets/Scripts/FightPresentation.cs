@@ -14,7 +14,14 @@ public class FightPresentation : MonoBehaviour
         if (instance == null)
             instance = this;
 
+        GameManager.SetPanelActive(false);
+
         setDogs();
+    }
+
+    void OnDisable()
+    {
+        GameManager.SetPanelActive(true);
     }
 
     private void setDogs()

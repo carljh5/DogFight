@@ -69,6 +69,7 @@ public class TextAnim : MonoBehaviour {
 				if (line < lineInfo.Count) {
 					if (index == lineInfo [line].startCharIdx) {
 						text.text += "\n";
+					    charCount++;
 						line++;
 					}
 				}

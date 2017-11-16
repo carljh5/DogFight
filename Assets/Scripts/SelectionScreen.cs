@@ -18,6 +18,7 @@ public abstract class SelectionScreen : MonoBehaviour
     {
         optionGameObject.SetActive(false);
     }
+    
 
     public virtual void ShowOptions()
     { }
