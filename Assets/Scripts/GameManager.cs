@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
             instance = this;
 
         //TODO: Delete this later:
-        PlayerDog = instance.Dogs[0];
+        PlayerDog = instance.Dogs[1];
 
         
         //foreach (var kv in EscapeKeyValuePairs)

@@ -18,6 +18,8 @@ public class FightManager : MonoBehaviour
 
     public Dog dog1, dog2;
 
+    public bool FirstFight = true;
+
     public DogAnim dog1Anim, dog2Anim;
 
     public Image dog1HealthBar, dog2HealthBar;
@@ -349,7 +351,7 @@ public class FightManager : MonoBehaviour
 		display.Play(feedbackStr);
 	}
 
-    private static string Bite(Dog attacker, Dog victimDog)
+    private string Bite(Dog attacker, Dog victimDog)
     {
 
         if (attacker.biteIsLocked)
@@ -372,15 +374,26 @@ public class FightManager : MonoBehaviour
             stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
 
         }
-        else if (attacker.GetFightBite() *roll > victimDog.currentStrength)
+        else if (attacker.GetFightBite() *roll > victimDog.currentStrength || 
+            (FirstFight &&attacker ==GameManager.PlayerDog 
+                && attacker.currentStrength/attacker.strength<0.2f && victimDog.currentStrength/victimDog.strength < 0.5f))
         {
-            victimDog.currentStrength = 0;
-            stringBuilder.AppendLine(attacker + " bites "+ victimDog +" in the neck. Ripping through its windpipe..");
+            if (victimDog == GameManager.PlayerDog && FirstFight)
+            {
+                stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
+                
+            }
+            else
+            {
+                victimDog.currentStrength = 0;
+                stringBuilder.AppendLine(attacker + " bites " + victimDog +
+                                         " in the neck. Ripping through its windpipe..");
 
-            //should probably make a lot of different death texts
-            stringBuilder.AppendLine(victimDog + " is no more.");
+                //should probably make a lot of different death texts
+                stringBuilder.AppendLine(victimDog + " is no more.");
 
-            victimDog.alive = false;
+                victimDog.alive = false;
+            }
         }
         else
         {
@@ -414,6 +427,8 @@ public class FightManager : MonoBehaviour
 
     private void EndFight()
     {
+        FirstFight = false;
+
         dog1Anim.CleanUp();
         dog2Anim.CleanUp();
 
