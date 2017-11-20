@@ -30,7 +30,7 @@ public class FightManager : MonoBehaviour
 
     private static readonly float waitSeconds = 4f;
 
-    private static readonly float biteLockStrengthDecrease = 0.35f;
+    private static readonly float biteLockStrengthDecrease = 0.20f;
 
     public SoundManager sound;
 
@@ -41,6 +41,8 @@ public class FightManager : MonoBehaviour
     private bool roundRunning;
 
     public float AutoPickAfterSeconds;
+
+    public bool lastMatch = false;
 
     public enum FightAction
     {
@@ -65,7 +67,8 @@ public class FightManager : MonoBehaviour
 
         dog1.currentStrength = dog1.strength;
         dog2.currentStrength = dog2.strength;
-        
+
+        lastMatch = dog2.dogName == "El Bruto";
 
         dog1Anim.blood.SetActive(false);
         dog2Anim.blood.SetActive(false);
@@ -78,7 +81,6 @@ public class FightManager : MonoBehaviour
 
 	IEnumerator OpeningRoutine()
 	{
-
         ShowFeedbackWindow();
         var feedStr = StartFight(dog1, dog2);
 
@@ -124,9 +126,7 @@ public class FightManager : MonoBehaviour
 
         dog1.healthBar = dog1HealthBar;
         dog2.healthBar = dog2HealthBar;
-
         
-
         Dog1Image.sprite = dog1.sprite;
         Dog2Image.sprite = dog2.sprite;
         Dog1Text.text = dog1.dogName;
@@ -169,12 +169,10 @@ public class FightManager : MonoBehaviour
             return aggressor + " barks vicously, frightening the closest spectators, " +
                    "but " + victim + " seems unaffected.";
         
-
         victim.currentStrength -= value;
 
         return aggressor + " barks vicously. " + victim + " looks at its owner, like a scared puppy. " +
                "\nHow will "+victim+" be able to deal with the viciousness of " + aggressor + "?";
-
     }
 
     private IEnumerator RoundRoutine()
@@ -353,7 +351,6 @@ public class FightManager : MonoBehaviour
 
     private string Bite(Dog attacker, Dog victimDog)
     {
-
         if (attacker.biteIsLocked)
         {
             victimDog.currentStrength -= biteLockStrengthDecrease * attacker.currentStrength;
@@ -372,9 +369,9 @@ public class FightManager : MonoBehaviour
         if (roll < 0.2)
         {
             stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
-
         }
-        else if (attacker.GetFightBite() *roll > victimDog.currentStrength || //if first fight and going poorly for player dog
+        else if (attacker.GetFightBite() *roll > victimDog.currentStrength || 
+            //if first fight and going poorly for player dog
             (FirstFight &&attacker ==GameManager.PlayerDog 
                 && (attacker.currentStrength/attacker.strength)<0.2f && (victimDog.currentStrength/victimDog.strength )< 0.5f))
         {
@@ -384,6 +381,11 @@ public class FightManager : MonoBehaviour
             {
                 stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
                 Debug.Log("Saved by the first fight ghost!");
+            }
+            else if (victimDog != GameManager.PlayerDog && lastMatch)
+            {
+                stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
+                Debug.Log("El Bruto saved by the last fight ghost!");
             }
             else
             {
@@ -404,7 +406,7 @@ public class FightManager : MonoBehaviour
 
             stringBuilder.AppendLine(attacker + " bites " + victimDog + ".");
             
-            if (Random.value > (victimDog.biteIsLocked ? 0.5 : 0.7) )
+            if (Random.value > (victimDog.biteIsLocked ? 0.2 : 0.7) )
             {
                 attacker.biteIsLocked = true;
                 stringBuilder.AppendLine("Its jaws locking onto the skin of " + victimDog + "'s neck.");
