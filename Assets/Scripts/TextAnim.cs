@@ -46,6 +46,7 @@ public class TextAnim : MonoBehaviour {
     public void Clear()
     {
         bufString = "";
+        isAnimPlaying = false;
     }
 
 
