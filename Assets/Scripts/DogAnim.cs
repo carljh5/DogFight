@@ -65,6 +65,9 @@ public class DogAnim : MonoBehaviour {
             yield return null;
         }
 
+        //Hack to make sure the position is reset
+        yield return new WaitForSeconds(6);
+        transform.position = origPos;
     }
 
 	IEnumerator HitRoutine() {
