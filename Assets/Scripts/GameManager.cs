@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -54,6 +53,11 @@ public class GameManager : MonoBehaviour
     private int nextEnemyDogIdx;
 
     private FightManager fightManager;
+
+    void Start()
+    {
+        Screen.SetResolution(450, 800, false);
+    }
 
     void Awake()
     {
