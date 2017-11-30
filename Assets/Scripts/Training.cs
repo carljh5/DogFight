@@ -25,7 +25,9 @@ public class Training : MonoBehaviour {
 			co = StartCoroutine (TrainRoutine());
 		}
 		curVal += 5;
+#if UNITY_IOS
 		Handheld.Vibrate ();
+#endif
 	}
 
 	IEnumerator TrainRoutine() {
