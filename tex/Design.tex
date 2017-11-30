@@ -24,7 +24,13 @@ The game prototype we created has the following features:
 
 %why did we choose which features?
 
+
+
+\commenting{Choosing a vertical display for the phone for accessibility and to signal the briefness of the play session. insert this somewhere}
+
+
 \subsection{Covering Prototype Limitations}
+\label{limitations}
 While we were creating a limited and deterministic prototype, we made several considerations, to hide the procedural and deterministic nature of the prototype. These include the map system, the ability to catch and breed, which all speak to a bigger game than the prototype is. The reason for doing this was to create an illusion of a longer game, and a potentially longer relationship with the dog. We feared that if the player knew the scale of the prototype or the already determined outcomes, they would not allow themselves to become emotionally attached to the dog. \\
 
 To create this illusion the UI is not build for simply supporting the features of the prototype, but also to support the affordances a longer and less procedural game could include. The option to 'Breed' the dogs is a feature that is not actually included in the prototype, but since the player is forced to only catch dogs of one specific gender, they will never discover this.\\
@@ -42,26 +48,25 @@ As mentioned in \ref{Agency} we have implemented impotent options in the dog fig
 \begin{figure}[h!]
 	\centering
     \includegraphics[width=0.5\textwidth]{battle.png}
-    \caption{A \textit{Rat Kid Dog Fight} battle}
+    \caption{A \textit{Rat Kid Dog Fight!} battle}
     \label{fig:DogFightBattle}
 \end{figure}
 
-All these battle options does not have any effect on the actual battle. The \textit{'Fight'} option let the player select between 
+All these battle options does not have any effect on the actual battle. The \textit{Fight} option let the player select between \textit{Throat Bite}, \textit{Tackle}, \textit{Scratch} and \textit{Lock Bite}. While \textit{Scratch} and \textit{Tackle} are typical generic \textit{Pokémon} moves, the other two also resemble names of moves \textit{Pokémon}, with a dog fight appropiate connotation, which also makes them appear more visceral and brutal. When chosen, all of these fight-options simply give the text feedback of your character shouting something appropiate, like "Go for the throat, DOGNAME!" for selecting \textit{Throat Bite}, which also is a mediation of the television series \textit{Pokémon: The Series} (1997), where the main character, \textit{Ash}, could shout "Pikachu, use Thunderbolt!". This reference further creates the expectance of an actual effect on gameplay, since those familiar with the show, would know that there is always a direct link between what the Pokémon trainer shouts and what the Pokémon does and would expect the same causality here.
+The option \textit{item} simply states that the player has no items to use and then progresses the battle. Likewise, the option \textit{Dog} states that the player "... cannot change dogs during this fight.". Similar to the (lacking) features mentioned in \ref{limitations}, this gives the player an idea of a bigger game, where they might unlock these options later on.\\
 
-Impotent options. Mimicing the Pokemon games we initially implemented the following fight options ‘Fight’, ‘Use Item’, ‘Switch Dog’, ‘Run’. The options did not do anything within the game.
-
-Goal with no player agency is to create a feeling of helplessness and hopefully the realization of no agency will put them in the place of the kid. 
+The goal with creating this illusion of player agency is to create a feeling of helplessness and hopefully the realization of no agency will put them in the place of the kid. 
 \commenting{ref to 'Papers, Please'}
+
+We want to battles to be realistically random\commenting{different word} and brutal, while still giving the player the illusion of being able to change the inevitable
 
 \subsection{Battle System}
 Even though the player has limited agency in the fight system, we still simulate the fights with a very game-like system.
 
 
-\commenting{insert the data behind the system}
+\commenting{insert the values behind the system}
 
 
 
 \subsection{Actions Between Fights}
-Choosing a vertical display for the phone for accessibility and to signal the briefness of the play session.
-
 By only allowing one choice per game week, we implicitly associate a cost with the action, and an investment in your dog.
