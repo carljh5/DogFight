@@ -1,5 +1,5 @@
 
-\documentclass[preprint,12pt]{elsarticle}
+\documentclass[preprint,12pt, authoryear]{elsarticle}
 
 %% Use the option review to obtain double line spacing
 %% \documentclass[preprint,review,12pt]{elsarticle}
@@ -175,17 +175,12 @@ Finally, we will determine from the prototype and test data how we would best cr
 
 
 \section{Conclusion}
+in against proceduyrality \citep{sicart2011} the author
 
 
 
 
 
-%% The Appendices part is started with the command \appendix;
-%% appendix sections are then done as normal sections
-\appendix
-
-\section{Appendix}
-\label{appendix}
 
 %% References
 %%
@@ -197,8 +192,12 @@ Finally, we will determine from the prototype and test data how we would best cr
 
 %% References with bibTeX database:
 
-\bibliographystyle{model1-num-names}
-\bibliography{sample.bib}
+\section*{\refname}
+\bibliographystyle{elsarticle-harv.bst}
+\bibliography{references.bib}
+
+\
+
 
 %% Authors are advised to submit their bibtex database files. They are
 %% requested to list a bibtex style file in the manuscript if they do
@@ -215,6 +214,13 @@ Finally, we will determine from the prototype and test data how we would best cr
 % \bibitem{}
 
 % \end{thebibliography}
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+\appendix
+
+\section{Appendix}
+\label{appendix}
 
 
 \end{document}
