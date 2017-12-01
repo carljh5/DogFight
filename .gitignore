@@ -40,3 +40,13 @@ tex/main\.spl
 tex/main\.pdf
 
 tex/main\.log
+
+tex/main\.run\.xml
+
+*.gz
+
+*.bbl
+
+*.bcf
+
+*.blg
