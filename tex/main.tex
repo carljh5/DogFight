@@ -28,6 +28,11 @@
 %% for the whole article with \linenumbers after \end{frontmatter}.
 \usepackage{lineno}
 
+%%to allow for ø and é
+\usepackage{inputenc}
+
+
+
 %% natbib.sty is loaded by default. However, natbib options can be
 %% provided with \biboptions{...} command. Following options are
 %% valid:
@@ -48,6 +53,15 @@
 %% \biboptions{comma,round}
 
 % \biboptions{}
+
+% remove preprint from foot
+\makeatletter
+\def\ps@pprintTitle{%
+ \let\@oddhead\@empty
+ \let\@evenhead\@empty
+ \def\@oddfoot{}%
+ \let\@evenfoot\@oddfoot}
+\makeatother
 
 
 \newcommand\commenting[1]{\textcolor{red}{\textbf{\underline{#1}}}}
@@ -86,7 +100,7 @@
 %% \address[label2]{<address>}
 
 \author{Carl Johan Hanberg}
-\author{Paw Høvsgaard Laursen}
+\author{Paw H\o vsgaard Laursen}
 
 
 \begin{abstract}
