@@ -50,3 +50,5 @@ tex/main\.run\.xml
 *.bcf
 
 *.blg
+
+tex/main\.out
