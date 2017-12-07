@@ -1,5 +1,40 @@
 In this section we will go through which design considerations we had when making the game.\
 
+\subsection{Design Goals}
+\begin{figure} 
+	\centering
+    \includegraphics[width=0.5\textwidth]{pitbull.jpg}
+    \caption{American Pit Bull Terrier}
+    \label{fig:pitbull}
+\end{figure}
+
+The design goal of the system is to have a battle system that can both be extremely deadly, where any bite could potentially kill, and also include painfully long-drawn-out matches determined by endurance. It is meant to be a stone-paper-scissors-like system, where a very aggressive dog (like an American Pit Bull Terrier seen in figure \ref{fig:pitbull}) would be able to beat a stronger dog (like the Japanese fighting dog Tosa Inu seen in figure \ref{fig:tosa}), but lose to a more courageous dog (like the Russian shepherd dog Caucasian Ovtcharka often used in dog fighting and seen in figure \ref{fig:ovtcharka}, which is genetically breed to guard a flock of sheep on its own, against a pack of wolves and is hence incredibly brave), but the courageous dog would then lose to the stronger dog. We do not have any knowledge whether this is how these dogs would actually do against eachother in a fight, even if this is something that is wildly discussed on internet fora.\
+
+\blockquote{"You want the truth don’t you? Well here goes. I’m 65 years old and fought dogs against the likes of Don Mayfield, Don Maloney, Walter Komosinski, Pete Sweeney, Earl Tudor, Jack Kelly, Jerry Bean, I could go on but what’s the point? I won my share and lost my share. IF there was a better combat dog than the pit bull, then that’s what the pros would be using. You’re talking about a 175 lb. dog against a 50 lb pit bull. The pit bull stil wins. Why? Because the Russian dog WASN’T bred for combat. I’ve seen pit bulls up against everything available and they still win. Are there exceptions to every rule? Of course. When you match a 175 dog against a 50 lb pitbull, the odds are stacked against the smaller dog. But, pound for pound there is NO dog capable of whipping a pit bull. As a matter of fact, I will put a 50 lb. pit bull up against any 175 lb Russian dog in the world. \
+
+There’s an old saying that goes like this, “it’s not the size of the dog in the fight, but the size of the fight in the dog.” The American Pit Bull is the world’s greatest combat animal ever bred. If you think placing a 175 lb. Russian dog against a 50 lb. pit bull you have my deepest sympathies. When the pit bull grabs the big dog by the now and won’t let go, let’s see how much screaming goes on fro the big dog. And make no mistake, the pit bull IS gonna at some time or another bite the bigger dog in a place he ain’t gonna care much for. And once again, if the “pros” who fight dogs felt like the Russian dog was the best combat dog, don’t you think they’d be using them instead of the lowly pit bull? ‘Nuff said."\
+
+- \textit{American Pitbull Terrier vs Ovcharka?} \url{http://www.russiandog.net/pitbull-terrier-vs-ovcharka.html}
+\label{pitbullQuote}}
+
+Quote is example of how stone-paper-scissors the discussion is.\
+
+\begin{figure} 
+	\centering
+    \includegraphics[width=0.5\textwidth]{tosa.jpg}
+    \caption{Tosa Inu}
+    \label{fig:tosa}
+\end{figure}
+
+In the prototype the first fight is hard-coded to be a win for the player and the fourth match will always be a loss. So if the \textit{wrong} dog were to kill the other and win, it would instead miss.\
+
+\begin{figure}
+	\centering
+    \includegraphics[width=0.5\textwidth]{ovtcharka.jpg}
+    \caption{Caucasian Ovtcharka}
+    \label{fig:ovtcharka}
+\end{figure}
+
 \subsection{Game Features}
 The game prototype we created has the following features:
 
@@ -98,38 +133,6 @@ The main loop continues untill one of the dogs has 0 \textit{Strength}, after wh
 Both \textit{Speed} and \textit{Bite} are relative to the current \textit{Strength} of the dog, so their effectiveness decreases, as the fight goes on. While a dog has its bite locked around the other one it does not bite the other dog, instead it just decreases the opposing dog's \textit{Strength} by a small margin. The other dogs chance to bite the dog with the locked bite is also decreased.\
 
 If the jaws of both dogs are locked\footnote{\url{http://thetruthaboutpitbulls.blogspot.dk/2012/06/locking-jaws.html}} onto the skin of eachother the organizers will separate the dogs with steel bars. This is a big part of the natural narrative of real dog fighting, as mentioned in \citep{london1997call}, where the dogs' jaws are separated with gun barrels for dramatic effect.\
-
-\begin{figure} 
-	\centering
-    \includegraphics[width=0.5\textwidth]{pitbull.jpg}
-    \caption{American Pit Bull Terrier}
-    \label{fig:pitbull}
-\end{figure}
-
-The design goal of the system is to have a battle system that can both be extremely deadly, where any bite could potentially kill, and also include painfully long-drawn-out matches determined by endurance. It is meant to be a stone-paper-scissors-like system, where a very aggressive dog (like an American Pit Bull Terrier seen in figure \ref{fig:pitbull}) would be able to beat a stronger dog (like the Japanese fighting dog Tosa Inu seen in figure \ref{fig:tosa}), but lose to a more courageous dog (like the Russian shepherd dog Caucasian Ovtcharka often used in dog fighting and seen in figure \ref{fig:ovtcharka}, which is genetically breed to guard a flock of sheep on its own, against a pack of wolves and is hence incredibly brave), but the courageous dog would then lose to the stronger dog. We do not have any knowledge whether this is how these dogs would actually do against eachother in a fight, even if this is something that is wildly discussed on internet fora.\
-
-\blockquote{"You want the truth don’t you? Well here goes. I’m 65 years old and fought dogs against the likes of Don Mayfield, Don Maloney, Walter Komosinski, Pete Sweeney, Earl Tudor, Jack Kelly, Jerry Bean, I could go on but what’s the point? I won my share and lost my share. IF there was a better combat dog than the pit bull, then that’s what the pros would be using. You’re talking about a 175 lb. dog against a 50 lb pit bull. The pit bull stil wins. Why? Because the Russian dog WASN’T bred for combat. I’ve seen pit bulls up against everything available and they still win. Are there exceptions to every rule? Of course. When you match a 175 dog against a 50 lb pitbull, the odds are stacked against the smaller dog. But, pound for pound there is NO dog capable of whipping a pit bull. As a matter of fact, I will put a 50 lb. pit bull up against any 175 lb Russian dog in the world. \
-
-There’s an old saying that goes like this, “it’s not the size of the dog in the fight, but the size of the fight in the dog.” The American Pit Bull is the world’s greatest combat animal ever bred. If you think placing a 175 lb. Russian dog against a 50 lb. pit bull you have my deepest sympathies. When the pit bull grabs the big dog by the now and won’t let go, let’s see how much screaming goes on fro the big dog. And make no mistake, the pit bull IS gonna at some time or another bite the bigger dog in a place he ain’t gonna care much for. And once again, if the “pros” who fight dogs felt like the Russian dog was the best combat dog, don’t you think they’d be using them instead of the lowly pit bull? ‘Nuff said."\
-
-- \textit{American Pitbull Terrier vs Ovcharka?} \url{http://www.russiandog.net/pitbull-terrier-vs-ovcharka.html}
-\label{pitbullQuote}}
-
-\begin{figure} 
-	\centering
-    \includegraphics[width=0.5\textwidth]{tosa.jpg}
-    \caption{Tosa Inu}
-    \label{fig:tosa}
-\end{figure}
-
-\begin{figure}
-	\centering
-    \includegraphics[width=0.5\textwidth]{ovtcharka.jpg}
-    \caption{Caucasian Ovtcharka}
-    \label{fig:ovtcharka}
-\end{figure}
-
-In the prototype the first fight is hard-coded to be a win for the player and the fourth match will always be a loss. So if the \textit{wrong} dog were to kill the other and win, it would instead miss.\
 
 \subsection{Actions Between Fights}
 Between the dog fights the players had the option of either training their dogs, breeding the dogs or catching a new dog. As mentioned in \ref{limitations} both catching other dogs or breeding is not possible to succeed in the prototype and are only there to give the illusion of a more expansive game. The training is done by rapidly tapping the screen to get the bar seen in figure \ref{fig:training} full up. Then the dog's respective stat increases by one. If the bar becomes completely empty before this, the training fails and nothing happens.\ 
