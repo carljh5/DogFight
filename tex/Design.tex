@@ -89,9 +89,8 @@ As mentioned in \ref{Agency} we have implemented impotent options in the dog fig
 All these battle options does not have any effect on the actual battle. The \textit{Fight} option let the player select between \textit{Throat Bite}, \textit{Tackle}, \textit{Scratch} and \textit{Lock Bite}. While \textit{Scratch} and \textit{Tackle} are typical generic \textit{Pokémon} moves, the other two also resemble names of moves from \textit{Pokémon} with a dog fight connotation, which also makes them appear more visceral and brutal. When chosen, all of these fight-options simply give the text feedback of your character shouting something appropiate, like "Go for the throat, DOGNAME!" for selecting \textit{Throat Bite}, which also is a mediation of the television series \textit{Pokémon: The Series} (1997), where the main character, \textit{Ash}, could shout "Pikachu, use Thunderbolt!". This reference further creates the expectance of an actual effect on gameplay, since those familiar with the show, would know that there is always a direct link between what the Pokémon trainer shouts and what the Pokémon does and would expect the same causality here.
 The option \textit{item} simply states that the player has no items to use and then progresses the battle. Likewise, the option \textit{Dog} states that the player "... cannot change dogs during this fight.". Similar to the (lacking) features mentioned in \ref{limitations}, this gives the player an idea of a bigger game, where they might unlock these options later on.\
 
-The goal with creating this illusion of player agency is to create a feeling of helplessness and hopefully the realization of no agency will put them in the place of the kid. 
-\commenting{ref to 'Papers, Please'}
-We want to battles to be realistically random\commenting{different word} and brutal, while still giving the player the illusion of being able to change the inevitable, creating the same superstition as mentioned in \ref{Agency}.\
+The goal with creating this illusion of player agency is to create a feeling of helplessness and hopefully the realization of no agency will put them in the place of the kid. \ 
+We want to battles to be realistically chaotic and brutal, while still giving the player the illusion of being able to change the inevitable, creating the same superstition as mentioned in \ref{Agency}.\
 
 \subsection{Battle System}
 \label{battleSystem}
@@ -121,24 +120,21 @@ The battle system works in the following way:
 		\hline
 		Speed Roll	& The dog with the highest roll, determined by speed bites first. &	Dog1 bites first & "Dog1 snaps after Dog2s neck. \\
 		\hline
-		Bite roll & The biting dogs rolls BITE against STRENGTH to penetrate to kill or injur the other dog. Max roll will always penetrate, Penetrating rolls has a chance to kill or injur the other dog. Non-penetrating rolls will still have the dog bite onto and get stuck in the other dog. Low rolls will not even get stuck & Dog1 bites onto Dog2. Locking it's jaws around it. The strength of Dog2 decreases.	& "Dog1 Bites Dog2. Its jaws locking onto the skin of Dog2s stomach." \\
+		Bite roll & The biting dogs rolls BITE to penetrate to kill or injur the other dog. There is always a 20\% chance to miss. Otherwise the bit will reduce the other dogs STRENGTH by the attacking dogs BITE divided by three. If it hit, the attacking dog has a 30\% chance to get its jaw to lock on the other dog. & "Dog1 Bites Dog2. Its jaws locking onto the skin of Dog2s neck." \\
 		\hline
-		Other dogs bite Roll & Similar to above. & & "Dog2 bites Dog1. Its jaws locking onto the skin of Dog1s neck." \\
+		Other dogs bite Roll & Similar to above. & & "Dog2 snaps after Dog1. Dog2 misses Dog1." \\
 		\hline
 	\end{tabular}
 \end{center}
 
-\commenting{correct bite roll explanation}
-
 The main loop continues untill one of the dogs has 0 \textit{Strength}, after which that dog dies.\
 
-Both \textit{Speed} and \textit{Bite} are relative to the current \textit{Strength} of the dog, so their effectiveness decreases, as the fight goes on. While a dog has its bite locked around the other one it does not bite the other dog, instead it just decreases the opposing dog's \textit{Strength} by a small margin. The other dogs chance to bite the dog with the locked bite is also decreased.\
+Both \textit{Speed} and \textit{Bite} are relative to the current \textit{Strength} of the dog, so their effectiveness decreases, as the fight goes on. \textit{Bite} will always be at a minimum of 50\% of the \textit{Bite} stat. This also means that a strong dog will be less decreased on other attributes, as the fight goes on. While a dog has its bite locked around the other one it does not bite the other dog, instead it just decreases the opposing dog's \textit{Strength} by a small margin. The other dogs chance to bite the dog with the locked bite is also decreased.\
 
 If the jaws of both dogs are locked\footnote{\url{http://thetruthaboutpitbulls.blogspot.dk/2012/06/locking-jaws.html}} onto the skin of eachother the organizers will separate the dogs with steel bars. This is a big part of the natural narrative of real dog fighting, as mentioned in \citep{london1997call}, where the dogs' jaws are separated with gun barrels for dramatic effect.\
 
 \subsection{Actions Between Fights}
 Between the dog fights the players had the option of either training their dogs, breeding the dogs or catching a new dog. As mentioned in \ref{limitations} both catching other dogs or breeding is not possible to succeed in the prototype and are only there to give the illusion of a more expansive game. The training is done by rapidly tapping the screen to get the bar seen in figure \ref{fig:training} full up. Then the dog's respective stat increases by one. If the bar becomes completely empty before this, the training fails and nothing happens.\ 
-
 
 \begin{figure}[h!] 
 	\centering
@@ -147,4 +143,4 @@ Between the dog fights the players had the option of either training their dogs,
     \label{fig:training}
 \end{figure}
 
-By only allowing one choice per game week, we implicitly associate a cost with the action, and an investment in your dog. This also frames the game loop nicely, so the main loop becomes Train/Catch/Breed-\>Dog Fight-\>Train/Catch/Breed-\>... \
+By only allowing one choice per game week, we implicitly associate a cost with the action, and an investment in your dog. This also frames the game loop nicely, so the main loop becomes Train/Catch/Breed \rightarrow Dog Fight \rightarrow Train/Catch/Breed \rightarrow ...
