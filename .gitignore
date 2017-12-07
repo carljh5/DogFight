@@ -52,3 +52,5 @@ tex/main\.run\.xml
 *.blg
 
 tex/main\.out
+
+tex/main\.toc
