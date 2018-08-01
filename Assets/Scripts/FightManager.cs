@@ -283,16 +283,18 @@ public class FightManager : MonoBehaviour
     {
 
         if (!fightRunning)
-            if (!GameManager.PlayerDog.alive)
-                Defeat();
-            else
-                EndFight();
+        {
+            //if (!GameManager.PlayerDog.alive)
+            //    Defeat();
+            //else
+            //    EndFight();
+        }
         else
         {
             // ACTION RESOLUTION
             ResolvePlayerAction(chosenAction);
 
-            StartCoroutine(RoundRoutine());
+            //StartCoroutine(RoundRoutine());
         }
     }
 
