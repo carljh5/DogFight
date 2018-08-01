@@ -22,7 +22,8 @@ public class FightManager : MonoBehaviour
 
     public DogAnim dog1Anim, dog2Anim;
 
-    public Image dog1HealthBar, dog2HealthBar;
+    /// Removed the healtbars
+    //public Image dog1HealthBar, dog2HealthBar;
 
     public Text Dog1Text, Dog2Text;
 
@@ -94,7 +95,7 @@ public class FightManager : MonoBehaviour
             sound.PlayWhine();
 	    }
         yield return new WaitForSeconds(feedStr.Length * 0.03f);
-        HideFeedbackWindow();
+        StartCoroutine(PickAfterSeconds(AutoPickAfterSeconds));
 	}
 
     void ShowFeedbackWindow()
@@ -104,28 +105,13 @@ public class FightManager : MonoBehaviour
             go.SetActive(go.name.Contains("Feedback"));
         }
     }
-
-    void HideFeedbackWindow()
-    {
-
-        foreach (GameObject go in panels)
-        {
-            go.SetActive(go.name.Contains("Action"));
-        }
-    }
-
+    
     private string StartFight(Dog dog1, Dog dog2)
     {
         fightRunning = true;
         //should we reset the current strength to strength
         dog1.currentStrength = dog1.strength;
         dog2.currentStrength = dog2.strength;
-
-        dog1HealthBar.fillAmount = 1;
-        dog2HealthBar.fillAmount = 1;
-
-        dog1.healthBar = dog1HealthBar;
-        dog2.healthBar = dog2HealthBar;
         
         Dog1Image.sprite = dog1.sprite;
         Dog2Image.sprite = dog2.sprite;
@@ -284,7 +270,6 @@ public class FightManager : MonoBehaviour
 
             yield return new WaitForSeconds(waitSeconds + 6);
         }
-        HideFeedbackWindow();
         StartCoroutine(PickAfterSeconds(AutoPickAfterSeconds));
 
     }
