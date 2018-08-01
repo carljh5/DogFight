@@ -274,6 +274,10 @@ public class FightManager : MonoBehaviour
 
     }
 
+    public void ShoutAction(int shout)
+    {
+        Round((FightAction)shout);
+    }
 
     public void Round(FightAction chosenAction)
     {
