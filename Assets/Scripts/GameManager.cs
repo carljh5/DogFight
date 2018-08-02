@@ -154,9 +154,9 @@ public class GameManager : MonoBehaviour
     public static void SetDogName(string name)
     {
         if (string.IsNullOrEmpty(name))
-            PlayerDog.dogName = "Chicharito";
+            PlayerDogs.Last().dogName = "Chicharito";
         else
-            PlayerDog.dogName = name;
+            PlayerDogs.Last().dogName = name;
 
         instance.EscapeWords[instance.DogNameEscapeWord] = PlayerDog.dogName;
 
