@@ -36,9 +36,13 @@ public class FightManager : MonoBehaviour
     public SoundManager sound;
 
 	private string feedbackStr = "";
+
+    private string nextMessage = "";
     
     public GameObject[] ToggleAfterMatch;
     public GameObject[] ToggleAfterDefeat;
+    public GameObject[] ToggleAfterLastDogDead;
+
     private bool roundRunning;
 
     public float AutoPickAfterSeconds;
@@ -281,63 +285,50 @@ public class FightManager : MonoBehaviour
 
     public void Round(FightAction chosenAction)
     {
-
-        if (!fightRunning)
-        {
-            //if (!GameManager.PlayerDog.alive)
-            //    Defeat();
-            //else
-            //    EndFight();
-        }
-        else
+        
+        if (fightRunning)
         {
             // ACTION RESOLUTION
             ResolvePlayerAction(chosenAction);
-
-            //StartCoroutine(RoundRoutine());
         }
     }
 
+    //Sets the next message to a corresponding player shout
     private void ResolvePlayerAction(FightAction action)
 	{
+        Debug.Log("fight aciton " + action);
+
         switch (action)
         {
 		case FightAction.ThroatBite:
 			//Debug.Log ("\"Go for the Throat, '" + dog1 + "'!\"");
-			feedbackStr = "\"Go for the Throat, '" + dog1 + "'!\"";
+			nextMessage = "\"Go for the Throat, '" + dog1 + "'!\"";
                 break;
             case FightAction.LockBite:
                 //Debug.Log("\"Lock your jaws around its neck, '" + dog1 + "'!\"");
-				feedbackStr = "\"Lock your jaws around its neck, '" + dog1 + "'!\"";
+                nextMessage = "\"Lock your jaws around its neck, '" + dog1 + "'!\"";
                 break;
 		case FightAction.Scratch:
-				//Debug.Log ("\"Scratch it, '" + dog1 + "'!\"");
-				feedbackStr = "\"Scratch it, '" + dog1 + "'!\"";
+                //Debug.Log ("\"Scratch it, '" + dog1 + "'!\"");
+                nextMessage = "\"Scratch it, '" + dog1 + "'!\"";
                 break;
 		case FightAction.Tackle:
-				//Debug.Log ("\"Tackle it, '" + dog1 + "'!\"");
-				feedbackStr = "\"Tackle it, '" + dog1 + "'!\"";
+                //Debug.Log ("\"Tackle it, '" + dog1 + "'!\"");
+                nextMessage = "\"Tackle it, '" + dog1 + "'!\"";
                 break;
 		case FightAction.Run:
-				//Debug.Log ("You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.");
-				feedbackStr = "You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.";
+                //Debug.Log ("You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.");
+                nextMessage = "You try to run from the fight, but one of the gangsters grabs you by the neck, and forces you to stay and watch.";
                 break;
 		case FightAction.UseItem:
-				//Debug.Log ("You do not have any Items to use.");
-				feedbackStr = "You do not have any Items to use.";
                 break;
 		case FightAction.SwitchDog:
-				//Debug.Log ("You can not change dogs during this fight.");
-				feedbackStr = "You can not change dogs during this fight.";
                 break;
             case FightAction.NoAction:
-                feedbackStr = "";
                 return;
             default:
                 break;
         }
-        ShowFeedbackWindow();
-		display.Play(feedbackStr);
 	}
 
     private string Bite(Dog attacker, Dog victimDog)
@@ -409,6 +400,15 @@ public class FightManager : MonoBehaviour
 
     private IEnumerator PickAfterSeconds(float seconds)
     {
+        if(nextMessage != "")
+            //Play player shout!
+        {
+            display.Play(nextMessage);
+            //Maybe wait for a little while
+
+            nextMessage = "";
+        }
+
         roundRunning = false;
 
         yield return new WaitForSeconds(seconds);
