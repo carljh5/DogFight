@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
@@ -291,6 +292,14 @@ public class FightManager : MonoBehaviour
             // ACTION RESOLUTION
             ResolvePlayerAction(chosenAction);
         }
+        else
+        {
+            if (!GameManager.PlayerDog.alive)
+
+                Defeat();
+            else
+                EndFight();
+        }
     }
 
     //Sets the next message to a corresponding player shout
@@ -422,6 +431,8 @@ public class FightManager : MonoBehaviour
 
     private void EndFight()
     {
+        dog1.kills++;
+
         FirstFight = false;
 
         dog1Anim.CleanUp();
@@ -432,15 +443,31 @@ public class FightManager : MonoBehaviour
             go.SetActive(!go.activeSelf);
         }
     }
+
     private void Defeat()
     {
+        dog2.kills++;
+
         dog1Anim.CleanUp();
         dog2Anim.CleanUp();
 
-        foreach (var go in ToggleAfterDefeat)
+        if(GameManager.PlayerDogs.Any(d=>d.alive))
         {
-            go.SetActive(!go.activeSelf);
+            GameManager.PlayerDog = GameManager.PlayerDogs.First(d => d.alive);
+
+            foreach (var go in ToggleAfterDefeat)
+            {
+                go.SetActive(!go.activeSelf);
+            }
+
         }
+        else
+            foreach (var go in ToggleAfterLastDogDead)
+            {
+                Debug.Log("GAME OVER!!");
+
+                go.SetActive(!go.activeSelf);
+            }
     }
 
 }

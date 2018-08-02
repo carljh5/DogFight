@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public static string PlayerName;
 
-    public static Dog PlayerDog { get; private set; }
+    public static Dog PlayerDog;
 
     public static bool LeashDog;
     
