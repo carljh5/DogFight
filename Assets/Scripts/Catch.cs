@@ -7,7 +7,7 @@ public class Catch: MonoBehaviour {
 	public RectTransform bar;
 	public RectTransform target;
 	public RectTransform marker;
-	public float speed = 20f;
+	public float speed = 900;
     public Animator LassoAnimator;
     public GameObject FailScene;
     public GameObject SuccessScene;
@@ -22,6 +22,8 @@ public class Catch: MonoBehaviour {
     void OnEnable() {
         dogToCatch = CatchDogs[Random.Range(0, CatchDogs.Count - 1)];
         DogImage.sprite = dogToCatch.sprite;
+        speed =  200 + 45* (dogToCatch.speed + dogToCatch.aggression + dogToCatch.strength + dogToCatch.bite);
+        Debug.Log("speed: " + speed);
 
 		co = StartCoroutine (MarkerRoutine());
 	}
@@ -30,7 +32,7 @@ public class Catch: MonoBehaviour {
 		if(co!=null)
 			StopCoroutine (co);
 
-        if (isCatchAble && Random.Range(0, 30) >( dogToCatch.strength+dogToCatch.speed))
+        if (isCatchAble)
         {
             Debug.Log("caught the " + dogToCatch.race);
             StartCoroutine(SwitchToSuccesScene());
