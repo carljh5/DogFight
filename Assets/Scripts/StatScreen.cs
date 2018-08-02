@@ -35,6 +35,7 @@ public class StatScreen : MonoBehaviour
         stats["Courage"] = d.courage;
         stats["Speed"] = d.speed;
         stats["Bite"] = d.bite;
+        stats["Dogs killed"] = d.kills;
 
 	    foreach (var pair in stats)
 	    {
@@ -44,7 +45,7 @@ public class StatScreen : MonoBehaviour
 	        var e = obj.GetComponent<Entry>();
 
 	        e.Stat.text = pair.Key;
-	        e.Value.text = pair.Value.ToString("N");
+	        e.Value.text = pair.Value.ToString("0");
             e.gameObject.SetActive(true);
 
             instantiatedEntries.Add(obj);
