@@ -50,7 +50,7 @@ public class Dog : MonoBehaviour
     public bool alive = true;
     public bool biteIsLocked = false;
 
-
+    public int kills = 0;
 
     [Header("Unused variables")]
     //<= 0 is sterile
@@ -73,7 +73,8 @@ public class Dog : MonoBehaviour
         Rottweiler,
         AmericanPitbullTerrier,
         Chihuahua,
-        Coonhound
+        Coonhound,
+        Dalmatian
     }
     
 
