@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
     public float textVolume = 0.05f;
     public AudioClip clickSound;
     public AudioClip throwSound;
+    public AudioClip CatchSound;
 
     [Header("Background sounds")]
     public AudioClip fightBackground;
@@ -124,7 +125,13 @@ public class SoundManager : MonoBehaviour
     {
         
         instance.SfxAudioSource.PlayOneShot(instance.throwSound);
-        
+
+    }
+    public static void PlayCatch()
+    {
+
+        instance.SfxAudioSource.PlayOneShot(instance.CatchSound);
+
     }
 
     public float  PlayBite()

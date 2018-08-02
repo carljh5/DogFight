@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     
     public Dog[] EnemyDogs;
 
+    public static List<Dog> PlayerDogs;
+
     public Dog[] Dogs;
 
     public GameObject TextPanelGameObject;
@@ -57,6 +59,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Screen.SetResolution(450, 800, false);
+
+        PlayerDogs = new List<Dog>();
     }
 
     void Awake()
@@ -89,13 +93,16 @@ public class GameManager : MonoBehaviour
         {
             case GameEvent.Dog1Selected:
                 PlayerDog = instance.Dogs[0];
+                PlayerDogs.Add(PlayerDog);
                 break;
 
             case GameEvent.Dog2Selected:
                 PlayerDog = instance.Dogs[1];
+                PlayerDogs.Add(PlayerDog);
                 break;
             case GameEvent.Dog3Selected:
                 PlayerDog = instance.Dogs[2];
+                PlayerDogs.Add(PlayerDog);
                 break;
             case GameEvent.LeashDog:
             case GameEvent.UnleashDog:

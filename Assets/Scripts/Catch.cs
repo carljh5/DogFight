@@ -57,10 +57,13 @@ public class Catch: MonoBehaviour {
         LassoAnimator.Play("LassoThrow");
         SoundManager.PlayThrow();
         yield return new WaitForSeconds(1);
+        SoundManager.PlayCatch();
 
         //Remove dog from catchables
+        CatchDogs.Remove(dogToCatch);
 
         //add dog to players roster
+        GameManager.PlayerDogs.Add(dogToCatch);
 
         SuccessScene.SetActive(true);
         gameObject.SetActive(false);
