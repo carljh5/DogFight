@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour {
-
 	public GameObject[] Dojos;
 	private int amountOfDojos;
 	private int lastDojoIndex = 0;

@@ -5,24 +5,21 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MapNavigation : MonoBehaviour {
-	private RectTransform RT;
+	private RectTransform panelRectTransform;
+	private RectTransform parentRectTransform;
 	// Use this for initialization
 	void Start () {
-		RT = transform.GetComponent<RectTransform> ();
+		panelRectTransform = transform.GetComponent<RectTransform> ();
+		parentRectTransform = transform.parent.GetComponent<RectTransform> ();
 	}
 
 	public void Drag(BaseEventData data) {
 		PointerEventData pointer = data as PointerEventData;
-		float radiusX = RT.rect.width/2f;
-		float radiusY = RT.rect.height/2f;
-		print (" x position rect " + RT.anchoredPosition.x + "    x position of right bounds " + (RT.anchoredPosition.x + radiusX));
-		if ((RT.anchoredPosition.x + radiusX) < Screen.width)
-			print ("STOP");
 
-
-		RT.anchoredPosition += pointer.delta;
+		panelRectTransform.anchoredPosition += pointer.delta;
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
 		
