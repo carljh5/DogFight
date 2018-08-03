@@ -54,6 +54,10 @@ public class GameManager : MonoBehaviour
 
     private int nextEnemyDogIdx;
 
+    public int Day = 0;
+
+    public int Money = 0;
+
     private FightManager fightManager;
 
     void Start()

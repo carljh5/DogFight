@@ -74,7 +74,10 @@ public class Dog : MonoBehaviour
         AmericanPitbullTerrier,
         Chihuahua,
         Coonhound,
-        Dalmatian
+        Dalmatian,
+        Akita,
+        Labrador
+
     }
     
     public static string AsString(Race race)
