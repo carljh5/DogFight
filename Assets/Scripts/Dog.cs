@@ -50,7 +50,7 @@ public class Dog : MonoBehaviour
     public bool alive = true;
     public bool biteIsLocked = false;
 
-
+    public int kills = 0;
 
     [Header("Unused variables")]
     //<= 0 is sterile
@@ -73,9 +73,36 @@ public class Dog : MonoBehaviour
         Rottweiler,
         AmericanPitbullTerrier,
         Chihuahua,
-        Coonhound
+        Coonhound,
+        Dalmatian,
+        Akita,
+        Labrador
+
     }
     
+    public static string AsString(Race race)
+    {
+        var str = race.ToString();
+
+        var x = str.ToCharArray();
+
+        if (x.Length == 0)
+            return "";
+
+        for (int i = 1; i < x.Length; i++)
+        {
+            if(char.IsUpper(x[i]))
+            {
+                str = str.Substring(0, i) + " " + str.Substring(i);
+                x = str.ToCharArray();
+
+                i++;
+            }
+        }
+
+        return str;
+    }
+
 
     public float GetFightSpeed()
     {
@@ -91,6 +118,8 @@ public class Dog : MonoBehaviour
     public override string ToString()
     {
         return dogName;
+
+        
     }
 
     //public void Train

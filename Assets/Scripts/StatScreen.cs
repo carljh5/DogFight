@@ -35,6 +35,7 @@ public class StatScreen : MonoBehaviour
         stats["Courage"] = d.courage;
         stats["Speed"] = d.speed;
         stats["Bite"] = d.bite;
+        stats["Dogs killed"] = d.kills;
 
 	    foreach (var pair in stats)
 	    {
@@ -44,15 +45,16 @@ public class StatScreen : MonoBehaviour
 	        var e = obj.GetComponent<Entry>();
 
 	        e.Stat.text = pair.Key;
-	        e.Value.text = pair.Value.ToString("N");
+	        e.Value.text = pair.Value.ToString("0");
             e.gameObject.SetActive(true);
 
             instantiatedEntries.Add(obj);
 	    }
         StatEntry.gameObject.SetActive(false);
 
-	    NameText.text = d.dogName;
-	    DogImage.sprite = d.sprite;
+	    NameText.text = d.dogName + " " + (d.male ? "♂" : "♀");
+
+        DogImage.sprite = d.sprite;
 	}
 
     public void ShowEnemyDog(bool show)
