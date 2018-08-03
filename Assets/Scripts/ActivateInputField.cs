@@ -10,12 +10,20 @@ public class ActivateInputField : MonoBehaviour {
 
     public bool DogName;
 
+    public Image DogImage;
+
     //TODO: add a confirm button, so players can type in no name and not any failuers.
 	void OnEnable() {
 		inputField = GetComponent<InputField> ();
 		inputField.ActivateInputField ();
 	    inputField.characterLimit = 24;
-            // = Exterminator the Mad Dog
+        // = Exterminator the Mad Dog
+
+        var d = GameManager.PlayerDogs.FindLast(dog => true);
+
+        DogImage.sprite =d.sprite;
+
+        inputField.text = d.dogName;
 
         inputField.onEndEdit.AddListener(delegate
         {
