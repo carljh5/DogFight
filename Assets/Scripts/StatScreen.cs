@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class StatScreen : MonoBehaviour
 {
     public Entry StatEntry;
+    private Dog d;
 
     public Image DogImage;
 
@@ -26,9 +27,6 @@ public class StatScreen : MonoBehaviour
         {
             Destroy(e);
         }
-
-        //could be fed to show enemy dogs
-        var d = showEnemyDog ? GameManager.GetNextEnemy() : GameManager.PlayerDog;
 
         stats["Aggression"] = d.aggression;
         stats["Strength"] = d.strength;
@@ -60,7 +58,20 @@ public class StatScreen : MonoBehaviour
     public void ShowEnemyDog(bool show)
     {
         showEnemyDog = show;
+        
+        //could be fed to show enemy dogs
+        d = showEnemyDog ? GameManager.GetNextEnemy() : GameManager.PlayerDog;
+        
+        gameObject.SetActive(true);
+    }
+
+
+
+    public void ShowLastDog()
+    {
+        d = GameManager.PlayerDogs[GameManager.PlayerDogs.Count-1];
 
         gameObject.SetActive(true);
     }
 }
+
