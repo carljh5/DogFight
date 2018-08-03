@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -54,9 +55,15 @@ public class GameManager : MonoBehaviour
 
     private int nextEnemyDogIdx;
 
-    public int Day = 0;
+    public int Day = 1;
 
     public int Money = 0;
+
+    public int CostPrDog = 10;
+
+    public Text DayText, MoneyText, DailyCostText;
+
+
 
     private FightManager fightManager;
 
@@ -84,9 +91,28 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game manager initialized.");
     }
 
+    private void FixedUpdate()
+    {
+        MoneyText.text = Money.ToString();
+        DayText.text = Day.ToString();
+        DailyCostText.text = DailyCost().ToString();
+    }
+
+
     public static void SetPanelActive(bool active)
     {
         instance.TextPanelGameObject.SetActive(active);
+    }
+
+    public static void NextDay()
+    {
+        instance.Day++;
+        instance.Money -= DailyCost();
+    }
+
+    public static int DailyCost()
+    {
+        return PlayerDogs.Count * instance.CostPrDog;
     }
 
     public static void OptionSelected(GameEvent gameEvent)
