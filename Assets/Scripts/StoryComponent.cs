@@ -7,14 +7,25 @@ public class StoryComponent : MonoBehaviour {
 	public TextAnim display;
 	public GameObject[] panelsToToggle;
     public SoundManager.BackgroundSound BackgroundSound;
+	public bool playOnStart = false;
 
 	private int index = 0;
 
+	void Start() {
+		if (playOnStart) {
+			Play ();
+		}
+	}
+
 	void OnEnable() {
-        display.Clear();
-		Next ();
-        SoundManager.SetBackgroundSound(BackgroundSound);
+		Play ();
     }
+
+	void Play() {
+		display.Clear();
+		Next ();
+		SoundManager.SetBackgroundSound(BackgroundSound);
+	}
 
 	public void Next() {
 		
