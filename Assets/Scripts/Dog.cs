@@ -77,6 +77,29 @@ public class Dog : MonoBehaviour
         Dalmatian
     }
     
+    public static string AsString(Race race)
+    {
+        var str = race.ToString();
+
+        var x = str.ToCharArray();
+
+        if (x.Length == 0)
+            return "";
+
+        for (int i = 1; i < x.Length; i++)
+        {
+            if(char.IsUpper(x[i]))
+            {
+                str = str.Substring(0, i) + " " + str.Substring(i);
+                x = str.ToCharArray();
+
+                i++;
+            }
+        }
+
+        return str;
+    }
+
 
     public float GetFightSpeed()
     {
@@ -92,6 +115,8 @@ public class Dog : MonoBehaviour
     public override string ToString()
     {
         return dogName;
+
+        
     }
 
     //public void Train

@@ -34,9 +34,9 @@ public class FightPresentation : MonoBehaviour
 
         PlayerImage.sprite = p.sprite;
 
-        EnemyText.text = e.dogName + ", the " + e.race.ToString();
+        EnemyText.text = e.dogName + ", the " + Dog.AsString(e.race);
 
-        PlayerText.text = p.dogName + ", the " + p.race.ToString();
+        PlayerText.text = p.dogName + ", the " + Dog.AsString(p.race);
     }
 
     public static void Reset()

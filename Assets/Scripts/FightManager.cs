@@ -128,8 +128,8 @@ public class FightManager : MonoBehaviour
 
         SoundManager.SetBackgroundSound(SoundManager.BackgroundSound.Fight0, true);
         
-        return "The fight between the " + dog1.race + ", '" + dog1 + "', and the "
-            + dog2.race + ", '" + dog2 + "' has started.";
+        return "The fight between the " + Dog.AsString(dog1.race) + ", '" + dog1 + "', and the "
+            + Dog.AsString(dog2.race) + ", '" + dog2 + "' has started.";
     }
 
     public string AggressionRound()
