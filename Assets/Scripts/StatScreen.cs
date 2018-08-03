@@ -52,8 +52,9 @@ public class StatScreen : MonoBehaviour
 	    }
         StatEntry.gameObject.SetActive(false);
 
-	    NameText.text = d.dogName;
-	    DogImage.sprite = d.sprite;
+	    NameText.text = d.dogName + " " + (d.male ? "♂" : "♀");
+
+        DogImage.sprite = d.sprite;
 	}
 
     public void ShowEnemyDog(bool show)
