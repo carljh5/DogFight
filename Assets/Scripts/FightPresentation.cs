@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class FightPresentation : MonoBehaviour
     public Image EnemyImage, PlayerImage;
     public Text EnemyText, PlayerText;
     private static FightPresentation instance;
+    public Dropdown DogSelectDropDown;
+
 
     void OnEnable()
     {
@@ -16,12 +19,22 @@ public class FightPresentation : MonoBehaviour
 
         GameManager.SetPanelActive(false);
 
+        var drops = GameManager.PlayerDogs.Select(d => new Dropdown.OptionData(d.dogName,d.sprite)).ToList();
+        
+        DogSelectDropDown.AddOptions(drops);
+
         setDogs();
     }
 
     void OnDisable()
     {
         GameManager.SetPanelActive(true);
+    }
+
+    public void PickDog(int i)
+    {
+        GameManager.PlayerDog = GameManager.PlayerDogs[i];
+        setDogs();
     }
 
     private void setDogs()

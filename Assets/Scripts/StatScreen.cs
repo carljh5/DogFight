@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,6 +55,13 @@ public class StatScreen : MonoBehaviour
 
         DogImage.sprite = d.sprite;
 	}
+
+    internal void ShowDog(int i)
+    {
+        d = GameManager.PlayerDogs[i];
+
+        gameObject.SetActive(true);
+    }
 
     public void ShowEnemyDog(bool show)
     {
