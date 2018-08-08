@@ -81,6 +81,8 @@ public class FightManager : MonoBehaviour
 
         dog1.biteIsLocked = dog2.biteIsLocked = false;
 
+        GameManager.NextFight();
+
         //feedback.FeedSingle(StartFight(dog1, dog2));
         StartCoroutine(OpeningRoutine());
     }

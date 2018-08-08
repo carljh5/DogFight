@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
     //public KeyVal[] EscapeKeyValuePairs;
 
     [Header("EscapeWords")]
-    public string PlayerNameEscapeWord = "@playerName";
     public string DogNameEscapeWord = "@dogName";
     public string WinMoneyEscapeWord = "@win";
     public string LoseMoneyEscapeWord = "@lose";
@@ -133,7 +132,7 @@ public class GameManager : MonoBehaviour
             loc.SetActive(false);
         }
 
-        if (Day % 2 == 1)
+        if (Day % 2 == 0)
         {
             FightLocations[++lastLocation % FightLocations.Length].SetActive(true);
         }
@@ -183,6 +182,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static void NextFight()
+    {
+        instance.GoToNextFight();
+    }
+
     private void GoToNextFight()
     {
         if (fightManager == null)
@@ -200,6 +204,10 @@ public class GameManager : MonoBehaviour
         FightPresentation.Reset();
     }
 
+    /// <summary>
+    /// Depreceated
+    /// </summary>
+    /// <param name="name"></param>
     public static void SetName(string name)
     {
         if (string.IsNullOrEmpty(name))
@@ -207,7 +215,7 @@ public class GameManager : MonoBehaviour
         else
             PlayerName = name;
 
-        instance.EscapeWords[instance.PlayerNameEscapeWord] = PlayerName;
+        //instance.EscapeWords[instance.PlayerNameEscapeWord] = PlayerName;
 
         Debug.Log("Player is called " + PlayerName);
     }
