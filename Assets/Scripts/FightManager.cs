@@ -368,29 +368,14 @@ public class FightManager : MonoBehaviour
             (FirstFight &&attacker ==GameManager.PlayerDog 
                 && (attacker.currentStrength/attacker.strength)<0.2f && (victimDog.currentStrength/victimDog.strength )< 0.5f))
         {
-            if(!(attacker.GetFightBite() * roll > victimDog.currentStrength))
-                Debug.Log("Killed by the First Fight Ghost!");
-            if (victimDog == GameManager.PlayerDog && FirstFight)
-            {
-                stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
-                Debug.Log("Saved by the first fight ghost!");
-            }
-            else if (victimDog != GameManager.PlayerDog && lastMatch)
-            {
-                stringBuilder.AppendLine(attacker + " misses " + victimDog + ".");
-                Debug.Log("El Bruto saved by the last fight ghost!");
-            }
-            else
-            {
-                victimDog.currentStrength = 0;
-                stringBuilder.AppendLine(attacker + " bites " + victimDog +
-                                         " in the neck. Ripping through its windpipe..");
+            victimDog.currentStrength = 0;
+            stringBuilder.AppendLine(attacker + " bites " + victimDog +
+                                        " in the neck. Ripping through its windpipe..");
 
-                //should probably make a lot of different death texts
-                stringBuilder.AppendLine(victimDog + " is no more.");
+            //should probably make a lot of different death texts
+            stringBuilder.AppendLine(victimDog + " is no more.");
 
-                victimDog.alive = false;
-            }
+            victimDog.alive = false;
         }
         else
         {
