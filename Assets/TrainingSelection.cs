@@ -7,7 +7,15 @@ using UnityEngine.UI;
 public class TrainingSelection : MonoBehaviour {
 
     public Dropdown DogSelectDropDown;
+    public Image DogImage;
+    public Text DogNameText;
 
+
+    private void FixedUpdate()
+    {
+        DogImage.sprite = GameManager.PlayerDog.sprite;
+        DogNameText.text = GameManager.PlayerDog.dogName;
+    }
     private void OnEnable()
     {
 
