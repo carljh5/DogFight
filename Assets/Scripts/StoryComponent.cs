@@ -14,11 +14,13 @@ public class StoryComponent : MonoBehaviour {
 	void Start() {
 		if (playOnStart) {
 			Play ();
+			playOnStart = false;
 		}
 	}
 
 	void OnEnable() {
-		Play ();
+		if(!playOnStart)
+			Play ();
     }
 
 	void Play() {
