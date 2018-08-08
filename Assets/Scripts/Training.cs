@@ -60,7 +60,7 @@ public class Training : MonoBehaviour {
 			            break;
 
 			    }
-			    successScene.GetComponent<Text>().text = GameManager.Clean("SUCCESS! @dogName gained 1 " + str);
+			    successScene.GetComponent<Text>().text = GameManager.Clean("SUCCESS! "+GameManager.PlayerDog.dogName+ " gained 1 " + str);
 
 			    decay += 5;
 				break;

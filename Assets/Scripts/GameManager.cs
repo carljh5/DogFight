@@ -187,7 +187,13 @@ public class GameManager : MonoBehaviour
         instance.GoToNextFight();
     }
 
-    private void GoToNextFight()
+
+    public void PickDog(int i)
+    {
+        PlayerDog = PlayerDogs[i];
+    }
+
+        private void GoToNextFight()
     {
         if (fightManager == null)
             fightManager = GetComponent<FightManager>();
