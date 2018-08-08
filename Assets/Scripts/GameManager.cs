@@ -128,7 +128,12 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveFights()
     {
-        if(Day % 2 == 1)
+        foreach(var loc in FightLocations)
+        {
+            loc.SetActive(false);
+        }
+
+        if (Day % 2 == 1)
         {
             FightLocations[++lastLocation % FightLocations.Length].SetActive(true);
         }
