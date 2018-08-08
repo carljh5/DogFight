@@ -16,6 +16,8 @@ public class Dog : MonoBehaviour
 
     public GameObject prefab;
 
+    public int BeatThisDogPrize, LosePrize;
+
     [HideInInspector]
     public Image healthBar;
     public delegate IEnumerator OnStrengthChangeDelegate(float newValue,float oldValue);

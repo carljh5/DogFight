@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
     [Header("EscapeWords")]
     public string PlayerNameEscapeWord = "@playerName";
     public string DogNameEscapeWord = "@dogName";
+    public string WinMoneyEscapeWord = "@win";
+    public string LoseMoneyEscapeWord = "@lose";
 
     private Dictionary<string,string> EscapeWords = new Dictionary<string, string>();
 
@@ -60,13 +62,10 @@ public class GameManager : MonoBehaviour
 
     public int Day = 1;
 
-    public int Money = 0;
+    public static int Money = 0;
 
     public int CostPrDog = 10;
-
-    public int PrizeMoney = 50;
-    public int LossMoney = 10;
-
+    
     public Text DayText, MoneyText, DailyCostText;
 
 
@@ -78,6 +77,7 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(450, 800, false);
 
         PlayerDogs = new List<Dog>();
+        PlayerDogs = Dogs.ToList();
     }
 
     void Awake()
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         instance.Day++;
         
-        instance.Money -= DailyCost();
+        Money -= DailyCost();
     }
 
     public void SetActiveFights()
@@ -179,6 +179,9 @@ public class GameManager : MonoBehaviour
 
         fightManager.dog1 = PlayerDog;
         fightManager.dog2 = EnemyDogs[nextEnemyDogIdx++];
+
+        EscapeWords[WinMoneyEscapeWord] = "$ " + fightManager.dog2.BeatThisDogPrize;
+        EscapeWords[LoseMoneyEscapeWord] = "$ " + fightManager.dog2.LosePrize;
 
         FightPresentation.Reset();
     }
