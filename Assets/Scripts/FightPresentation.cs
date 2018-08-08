@@ -8,6 +8,7 @@ public class FightPresentation : MonoBehaviour
 {
     public Image EnemyImage, PlayerImage;
     public Text EnemyText, PlayerText;
+    public Text WinMoneyText, LoseMoneyText;
     private static FightPresentation instance;
     public Dropdown DogSelectDropDown;
 
@@ -18,9 +19,12 @@ public class FightPresentation : MonoBehaviour
             instance = this;
 
         GameManager.SetPanelActive(false);
+        
 
         var drops = GameManager.PlayerDogs.Select(d => new Dropdown.OptionData(d.dogName,d.sprite)).ToList();
-        
+
+        DogSelectDropDown.options.Clear();
+
         DogSelectDropDown.AddOptions(drops);
 
         setDogs();
@@ -42,6 +46,8 @@ public class FightPresentation : MonoBehaviour
         var e = GameManager.GetNextEnemy();
         var p = GameManager.PlayerDog;
 
+        WinMoneyText.text = "$ " +  e.BeatThisDogPrize;
+        LoseMoneyText.text = "$ " + e.LosePrize;
 
         EnemyImage.sprite = e.sprite;
 

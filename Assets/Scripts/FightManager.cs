@@ -435,6 +435,9 @@ public class FightManager : MonoBehaviour
 
         FirstFight = false;
 
+
+        GameManager.Money += dog2.BeatThisDogPrize;
+
         dog1Anim.CleanUp();
         dog2Anim.CleanUp();
 
@@ -450,6 +453,8 @@ public class FightManager : MonoBehaviour
 
         dog1Anim.CleanUp();
         dog2Anim.CleanUp();
+
+        GameManager.Money += dog2.LosePrize;
 
         if(GameManager.PlayerDogs.Any(d=>d.alive))
         {
