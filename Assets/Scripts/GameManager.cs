@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(450, 800, false);
 
         PlayerDogs = new List<Dog>();
-        PlayerDogs = Dogs.ToList();
+        //PlayerDogs = Dogs.ToList();
     }
 
     void Awake()
