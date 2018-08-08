@@ -19,9 +19,9 @@ public class MapManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.A)) {
-			ToggleNextDojo ();
-		}
-		
+//		if (Input.GetKeyDown (KeyCode.A)) {
+//			ToggleNextDojo ();
+//		}
+//		
 	}
 }
