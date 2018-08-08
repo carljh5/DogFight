@@ -15,7 +15,7 @@ public class WaitThenGoToScene : MonoBehaviour
     IEnumerator Routine()
     {
         yield return new WaitForSeconds(SecondsToWait);
-        Scene.SetActive(true);
+        //Scene.SetActive(true); We are not using this anymore. but the script is still usable for timed disabling
         gameObject.SetActive(false);
     }
 }
