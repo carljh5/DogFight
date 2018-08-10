@@ -30,7 +30,7 @@ public class FightManager : MonoBehaviour
 
     public Image Dog1Image, Dog2Image;
 
-    private static readonly float waitSeconds = 4f;
+    private static readonly float waitSeconds = 2.5f;
 
     private static readonly float biteLockStrengthDecrease = 0.20f;
 
@@ -225,7 +225,7 @@ public class FightManager : MonoBehaviour
                 fightRunning = false;
 			    yield return new WaitForSeconds (waitSeconds);
                 secondAnim.Play(DogAnim.animType.Death);
-                yield return new WaitForSeconds(waitSeconds);
+                yield return new WaitForSeconds(waitSeconds +2);
                 Round(FightAction.NoAction);
                 //HideFeedbackWindow();
                 yield break;
@@ -261,7 +261,7 @@ public class FightManager : MonoBehaviour
         {
             animation.Play(DogAnim.animType.Death);
             fightRunning = false;
-			yield return new WaitForSeconds (waitSeconds*2);
+			yield return new WaitForSeconds (waitSeconds*2+2);
             Round(FightAction.NoAction);
             //HideFeedbackWindow();
             yield break;
