@@ -162,6 +162,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+	public static void ReloadScene() {
+		Money = 0;
+		SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+	}
+
     public static void OptionSelected(GameEvent gameEvent)
     {
         Debug.Log("EVENT: "+gameEvent);

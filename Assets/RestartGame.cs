@@ -6,6 +6,6 @@ using UnityEngine.SceneManagement;
 public class RestartGame : MonoBehaviour {
 
 	public void ReloadScene() {
-		SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+		GameManager.ReloadScene ();
 	}
 }
