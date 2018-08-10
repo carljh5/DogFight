@@ -30,7 +30,7 @@ public class FightManager : MonoBehaviour
 
     public Image Dog1Image, Dog2Image;
 
-    private static readonly float waitSeconds = 2.5f;
+    private static readonly float waitSeconds = 2.8f;
 
     private static readonly float biteLockStrengthDecrease = 0.20f;
 
@@ -49,6 +49,7 @@ public class FightManager : MonoBehaviour
     public float AutoPickAfterSeconds;
 
     public bool lastMatch = false;
+    private bool doneShouting;
 
     public enum FightAction
     {
@@ -94,7 +95,12 @@ public class FightManager : MonoBehaviour
 
         display.Play(feedStr);
         yield return new WaitForSeconds(2f + feedStr.Length * 0.03f);
-	    feedStr = AggressionRound();
+        
+        doneShouting = false;
+        StartCoroutine(PickAfterSeconds());
+        yield return new WaitUntil(() => doneShouting);
+
+        feedStr = AggressionRound();
         display.Play (feedStr);
         yield return new WaitForSeconds(2.5f );
 	    if (feedStr.Contains("scared puppy"))
@@ -102,8 +108,12 @@ public class FightManager : MonoBehaviour
             sound.PlayWhine();
 	    }
         yield return new WaitForSeconds(feedStr.Length * 0.03f);
-        StartCoroutine(PickAfterSeconds(AutoPickAfterSeconds));
-	}
+        doneShouting = false;
+        StartCoroutine(PickAfterSeconds());
+        yield return new WaitUntil(() => doneShouting);
+
+        StartCoroutine(RoundRoutine());
+    }
 
     void ShowFeedbackWindow()
     {
@@ -211,6 +221,7 @@ public class FightManager : MonoBehaviour
         display.Play(Bite(firstDog, seconDog));
 
         yield return new WaitForSeconds(wait);
+        
 
         //if it got injured
         if (seconDog.currentStrength < str)
@@ -231,7 +242,11 @@ public class FightManager : MonoBehaviour
                 yield break;
             }
         yield return new WaitForSeconds(waitSeconds);
-
+        
+        doneShouting = false;
+        StartCoroutine(PickAfterSeconds());
+        yield return new WaitUntil(() => doneShouting);
+        
         wait = sound.PlayBite();
 
         str = firstDog.currentStrength;
@@ -277,9 +292,15 @@ public class FightManager : MonoBehaviour
 
             yield return new WaitForSeconds(waitSeconds + 6);
         }
-        StartCoroutine(PickAfterSeconds(AutoPickAfterSeconds));
 
+        doneShouting = false;
+        StartCoroutine(PickAfterSeconds());
+        yield return new WaitUntil(() => doneShouting);
+
+
+        StartCoroutine(RoundRoutine());
     }
+    
 
     public void ShoutAction(int shout)
     {
@@ -394,26 +415,22 @@ public class FightManager : MonoBehaviour
         return stringBuilder.ToString();
     }
 
-    private IEnumerator PickAfterSeconds(float seconds)
+    private IEnumerator PickAfterSeconds()
     {
         if(nextMessage != "")
             //Play player shout!
         {
             display.Play(nextMessage);
             //Maybe wait for a little while
+            
+            yield return new WaitForSeconds(2f);
+
 
             nextMessage = "";
         }
 
-        roundRunning = false;
-
-        yield return new WaitForSeconds(seconds);
-
-        if (!roundRunning)
-        {
-            feedbackStr = "";
-            StartCoroutine(RoundRoutine());
-        }
+        doneShouting = true;
+        
     }
 
     private void EndFight()
