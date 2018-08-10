@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     public static void CheckMoney()
     {
-        if (Money < 0)
+        if (Money < 0 && instance.Day > 1)
         {
             instance.NoMoreDollars.SetActive(true);
         }
