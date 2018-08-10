@@ -449,6 +449,8 @@ public class FightManager : MonoBehaviour
         {
             GameManager.PlayerDog = GameManager.PlayerDogs.First(d => d.alive);
 
+            GameManager.PlayerDogs.RemoveAll(d => !d.alive);
+
             foreach (var go in ToggleAfterDefeat)
             {
                 go.SetActive(!go.activeSelf);
