@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     public static void CheckMoney()
     {
-        if (Money < 0)
+        if (Money < 0 && instance.Day > 1)
         {
             instance.NoMoreDollars.SetActive(true);
         }
@@ -226,12 +226,17 @@ public class GameManager : MonoBehaviour
             nextEnemyDogIdx = EnemyDogs.Count - 1;
 
         fightManager.dog1 = PlayerDog;
-        fightManager.dog2 = EnemyDogs[nextEnemyDogIdx++];
+        fightManager.dog2 = EnemyDogs[nextEnemyDogIdx];
 
         EscapeWords[WinMoneyEscapeWord] = "$ " + fightManager.dog2.BeatThisDogPrize;
         EscapeWords[LoseMoneyEscapeWord] = "$ " + fightManager.dog2.LosePrize;
 
         FightPresentation.Reset();
+    }
+
+    public static void TickUpEnemy()
+    {
+        instance.nextEnemyDogIdx++;
     }
 
     /// <summary>
