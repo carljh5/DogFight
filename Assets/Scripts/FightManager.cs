@@ -435,6 +435,8 @@ public class FightManager : MonoBehaviour
 
     private void EndFight()
     {
+        GameManager.TickUpEnemy();
+
         dog1.kills++;
 
         FirstFight = false;
@@ -453,6 +455,8 @@ public class FightManager : MonoBehaviour
 
     private void Defeat()
     {
+        GameManager.TickUpEnemy();
+
         dog2.kills++;
 
         GameManager.PutEnemyDogBackOnSchedule();
