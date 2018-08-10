@@ -23,6 +23,7 @@ public class Training : MonoBehaviour {
 
 	public void Train() {
 		if(!isTraining) {
+			curVal = 50f;
 			co = StartCoroutine (TrainRoutine());
 			isTraining = true;
 		}
