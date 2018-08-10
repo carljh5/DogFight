@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     public static bool LeashDog;
     
-    public Dog[] EnemyDogs;
+    public List<Dog> EnemyDogs;
 
     public static List<Dog> PlayerDogs;
 
@@ -104,10 +104,19 @@ public class GameManager : MonoBehaviour
         DailyCostText.text = DailyCost().ToString();
     }
 
-
     public static void SetPanelActive(bool active)
     {
         instance.TextPanelGameObject.SetActive(active);
+    }
+
+    public static void PutEnemyDogBackOnSchedule()
+    {
+        if (!GetNextEnemy().alive)
+            return;
+
+        instance.EnemyDogs.Add(GetNextEnemy());
+
+        GetNextEnemy().BeatThisDogPrize += 20;
     }
 
     public static void NextDay()
@@ -198,8 +207,8 @@ public class GameManager : MonoBehaviour
         if (fightManager == null)
             fightManager = GetComponent<FightManager>();
 
-        if (EnemyDogs.Length <= nextEnemyDogIdx)
-            nextEnemyDogIdx = EnemyDogs.Length - 1;
+        if (EnemyDogs.Count <= nextEnemyDogIdx)
+            nextEnemyDogIdx = EnemyDogs.Count - 1;
 
         fightManager.dog1 = PlayerDog;
         fightManager.dog2 = EnemyDogs[nextEnemyDogIdx++];
