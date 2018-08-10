@@ -11,6 +11,7 @@ public class ActivateInputField : MonoBehaviour {
     public bool DogName;
 
     public Image DogImage;
+    public Text RaceText;
 
     //TODO: add a confirm button, so players can type in no name and not any failuers.
 	void OnEnable() {
@@ -22,6 +23,8 @@ public class ActivateInputField : MonoBehaviour {
         var d = GameManager.PlayerDogs.FindLast(dog => true);
 
         DogImage.sprite =d.sprite;
+
+        RaceText.text = d.GetGender() + " " + Dog.AsString(d.race);
 
         inputField.text = d.dogName;
 

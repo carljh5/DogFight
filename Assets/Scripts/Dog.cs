@@ -81,7 +81,13 @@ public class Dog : MonoBehaviour
         Labrador
 
     }
-    
+
+    public string GetGender()
+    {
+        return (male ? "♂" : "♀");
+    }
+
+
     public static string AsString(Race race)
     {
         var str = race.ToString();
