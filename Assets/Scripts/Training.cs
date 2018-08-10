@@ -18,11 +18,13 @@ public class Training : MonoBehaviour {
         Strength, Bite, Aggression, Speed
     }
 
-	Coroutine co;
+	private Coroutine co;
+	private bool isTraining = false;
 
 	public void Train() {
-		if(co == null) {
+		if(!isTraining) {
 			co = StartCoroutine (TrainRoutine());
+			isTraining = true;
 		}
 		curVal += 5;
 #if UNITY_IOS
@@ -63,6 +65,7 @@ public class Training : MonoBehaviour {
 			    successScene.GetComponent<Text>().text = GameManager.Clean("SUCCESS! "+GameManager.PlayerDog.dogName+ " gained 1 " + str);
 
 			    decay += 5;
+				isTraining = false;
 				break;
 			}
 			curVal -= decay * Time.deltaTime;
@@ -70,6 +73,7 @@ public class Training : MonoBehaviour {
 			if (curVal <= minVal) {
 				gameObject.SetActive (false);
 				failureScene.SetActive (true);
+				isTraining = false;
 				break;
 			}
 		}
