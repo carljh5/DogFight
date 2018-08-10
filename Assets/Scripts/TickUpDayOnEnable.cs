@@ -8,4 +8,9 @@ public class TickUpDayOnEnable : MonoBehaviour {
     {
         GameManager.NextDay();
     }
+
+    private void OnDisable()
+    {
+        GameManager.CheckMoney();
+    }
 }

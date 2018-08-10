@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] FightLocations;
 	public GameObject[] WeekOptions;
+    public GameObject NoMoreDollars;
+
     public int lastLocation;
 
     public static bool LeashDog;
@@ -129,7 +131,7 @@ public class GameManager : MonoBehaviour
         instance.Day++;
 
         Money -= DailyCost();
-
+        
 		instance.SetActiveFights ();
 
     }
@@ -150,6 +152,14 @@ public class GameManager : MonoBehaviour
     public static int DailyCost()
     {
         return PlayerDogs.Count * instance.CostPrDog;
+    }
+
+    public static void CheckMoney()
+    {
+        if (Money < 0)
+        {
+            instance.NoMoreDollars.SetActive(true);
+        }
     }
 
     public static void OptionSelected(GameEvent gameEvent)
