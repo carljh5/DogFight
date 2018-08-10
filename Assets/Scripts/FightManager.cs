@@ -438,6 +438,8 @@ public class FightManager : MonoBehaviour
     {
         dog2.kills++;
 
+        GameManager.PutEnemyDogBackOnSchedule();
+
         dog1Anim.CleanUp();
         dog2Anim.CleanUp();
 
