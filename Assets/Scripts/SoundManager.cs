@@ -15,6 +15,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] whines;
     public AudioClip[] barks;
     public AudioClip[] death;
+	public AudioClip[] cheer;
 
     [Header("UI sounds")]
     public AudioClip popUp;
@@ -158,6 +159,13 @@ public class SoundManager : MonoBehaviour
         SfxAudioSource.PlayOneShot(barks[x]);
         return barks[x].length;
     }
+
+	public float PlayCheer()
+	{
+		var x = (int)(cheer.Length * Random.value);
+		SfxAudioSource.PlayOneShot (cheer [x]);
+		return cheer [x].length;
+	}
 
     public static void PlaySound(AudioClip sound)
     {
