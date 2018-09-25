@@ -7,6 +7,8 @@ public class DogAnim : MonoBehaviour {
 	Vector3 origPos;
 	Vector3 origScale;
     public Image DogImage;
+    public Image DogShadowImage;
+    public Image BloodAura;
 
     private List<GameObject> InstantiatedObjects = new List<GameObject>();
 
@@ -17,7 +19,9 @@ public class DogAnim : MonoBehaviour {
     public enum animType {
 		Hit,
 		Attack,
-        Death
+        Death,
+        Locking,
+        Locked
     }
 
 	void Start () {
@@ -42,6 +46,12 @@ public class DogAnim : MonoBehaviour {
             case animType.Death:
 		        StartCoroutine(DeathRoutine());
 		        break;
+            case animType.Locking:
+                DogShadowImage.gameObject.SetActive(true);
+                break;
+            case animType.Locked:
+                BloodAura.gameObject.SetActive(true);
+                break;
 			default:
 				break;
 		}
