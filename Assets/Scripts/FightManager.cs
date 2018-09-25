@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -237,6 +237,7 @@ public class FightManager : MonoBehaviour
 			    yield return new WaitForSeconds (waitSeconds);
                 secondAnim.Play(DogAnim.animType.Death);
                 yield return new WaitForSeconds(waitSeconds +2);
+
                 Round(FightAction.NoAction);
                 //HideFeedbackWindow();
                 yield break;
@@ -274,9 +275,10 @@ public class FightManager : MonoBehaviour
 
         if (!firstDog.alive)
         {
-            animation.Play(DogAnim.animType.Death);
             fightRunning = false;
-			yield return new WaitForSeconds (waitSeconds*2+2);
+            yield return new WaitForSeconds(waitSeconds);
+            animation.Play(DogAnim.animType.Death);
+			yield return new WaitForSeconds (waitSeconds+2);
             Round(FightAction.NoAction);
             //HideFeedbackWindow();
             yield break;
@@ -304,7 +306,7 @@ public class FightManager : MonoBehaviour
 
     public void ShoutAction(int shout)
     {
-        if (shout == -1) return;
+        if (shout == -1 ||!fightRunning) return;
 
         Round((FightAction)shout);
     }
