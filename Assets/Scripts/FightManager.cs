@@ -224,7 +224,16 @@ public class FightManager : MonoBehaviour
 
         var wait = sound.PlayBite();
 
-        display.Play(Bite(firstDog, seconDog));
+        var feedStr = Bite(firstDog, seconDog);
+
+        display.Play(feedStr);
+
+        if(feedStr.Contains("Its jaws locking"))
+        {
+            animation.Play(DogAnim.animType.Locking);
+            secondAnim.Play(DogAnim.animType.Locked);
+        }
+
 
         yield return new WaitForSeconds(wait);
         
@@ -275,8 +284,16 @@ public class FightManager : MonoBehaviour
             animation.Play(DogAnim.animType.Locked);
         }
 
+        
+         feedStr = Bite(seconDog, firstDog);
 
-        display.Play (Bite (seconDog, firstDog));
+        display.Play(feedStr);
+
+        if (feedStr.Contains("Its jaws locking"))
+        {
+            secondAnim.Play(DogAnim.animType.Locking);
+            animation.Play(DogAnim.animType.Locked);
+        }
 
         yield return new WaitForSeconds(wait);
 
