@@ -149,6 +149,8 @@ public class SoundManager : MonoBehaviour
         var x = (int)(whines.Length * Random.value);
 
         SfxAudioSource.PlayOneShot(whines[x]);
+
+
         return whines[x].length;
     }
 
@@ -163,7 +165,7 @@ public class SoundManager : MonoBehaviour
 	public float PlayCheer()
 	{
 		var x = (int)(cheer.Length * Random.value);
-		SfxAudioSource.PlayOneShot (cheer [x]);
+		SfxAudioSource.PlayOneShot (cheer [x],0.25f);
 		return cheer [x].length;
 	}
 

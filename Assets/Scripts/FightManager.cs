@@ -102,7 +102,11 @@ public class FightManager : MonoBehaviour
 
         feedStr = AggressionRound();
         display.Play (feedStr);
-        yield return new WaitForSeconds(2.5f );
+
+        yield return new WaitForSeconds(1f);
+        sound.PlayCheer();
+
+        yield return new WaitForSeconds(1.5f);
 	    if (feedStr.Contains("scared puppy"))
 	    {
             sound.PlayWhine();
@@ -228,7 +232,12 @@ public class FightManager : MonoBehaviour
         {
             secondAnim.Play(DogAnim.animType.Hit);
 
+            //TODO: replace with over certain amount instead of percentage, for less enthusiastic crowd with locked bites and in long matches
+            if(seconDog.currentStrength < str *0.90f|| !seconDog.alive)
+                sound.PlayCheer();
             yield return new WaitForSeconds(sound.PlayWhine());
+
+
         }
 
         if (!seconDog.alive)
@@ -273,7 +282,11 @@ public class FightManager : MonoBehaviour
             animation.Play(DogAnim.animType.Hit);
 
             //TODO: only if hurt enough, maybe make a slight injury sound
+
+            if (firstDog.currentStrength < str * 0.90f || !firstDog.alive)
+                sound.PlayCheer();
             yield return new WaitForSeconds(sound.PlayWhine());
+
         }
 
         if (!firstDog.alive)
@@ -289,6 +302,9 @@ public class FightManager : MonoBehaviour
         yield return new WaitUntil(() => !display.isAnimPlaying);
         yield return new WaitForSeconds(1.5f);
 
+        doneShouting = false;
+        StartCoroutine(PickAfterSeconds());
+        yield return new WaitUntil(() => doneShouting);
 
         if (seconDog.biteIsLocked && firstDog.biteIsLocked)
         {
