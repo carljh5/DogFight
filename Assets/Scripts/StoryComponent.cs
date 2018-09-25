@@ -29,6 +29,25 @@ public class StoryComponent : MonoBehaviour {
 		SoundManager.SetBackgroundSound(BackgroundSound);
 	}
 
+    public void AddPanel(GameObject go) {
+        GameObject[] temp = panelsToToggle;
+        panelsToToggle = new GameObject[panelsToToggle.Length+1];
+        for (int i = 0; i < temp.Length; i++) {
+            panelsToToggle[i] = temp[i];
+        }
+        panelsToToggle[panelsToToggle.Length - 1] = go;
+
+    }
+
+    public void RemovePanel(GameObject go) {
+        GameObject[] temp = panelsToToggle;
+        panelsToToggle = new GameObject[panelsToToggle.Length -1];
+        for (int i = 0; i < panelsToToggle.Length; i++) {
+            if (temp[i] != go)
+                panelsToToggle[i] = temp[i];
+        }
+    }
+
 	public void Next() {
 		
         SoundManager.PlayClick();
