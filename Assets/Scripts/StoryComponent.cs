@@ -9,6 +9,10 @@ public class StoryComponent : MonoBehaviour {
     public SoundManager.BackgroundSound BackgroundSound;
 	public bool playOnStart = false;
 
+    public string[] altParagraphs;
+    public GameObject[] altPanelsToToggle;
+    public bool switchToAltAfterFirstToggle;
+
 	private int index = 0;
 
 	void Start() {
@@ -23,7 +27,16 @@ public class StoryComponent : MonoBehaviour {
 			Play ();
     }
 
-	void Play() {
+    private void OnDisable()
+    {
+        if (!switchToAltAfterFirstToggle)
+            return;
+        paragraphs = altParagraphs;
+        panelsToToggle = altPanelsToToggle;
+
+    }
+
+    void Play() {
 		display.Clear();
 		Next ();
 		SoundManager.SetBackgroundSound(BackgroundSound);
