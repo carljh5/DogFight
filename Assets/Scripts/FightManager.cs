@@ -304,6 +304,8 @@ public class FightManager : MonoBehaviour
 
     public void ShoutAction(int shout)
     {
+        if (shout == -1) return;
+
         Round((FightAction)shout);
     }
 
