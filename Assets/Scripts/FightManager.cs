@@ -335,9 +335,12 @@ public class FightManager : MonoBehaviour
             animation.Play(DogAnim.animType.Locked);
             secondAnim.Play(DogAnim.animType.Locked);
 
-            display.Play ("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
+            display.Play("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
 
-            yield return new WaitForSeconds(waitSeconds + 6);
+            yield return new WaitForSeconds(sound.PlayUnlockJaws());
+            sound.PlayBark();
+
+            yield return new WaitForSeconds(waitSeconds);
         }
 
         doneShouting = false;
@@ -454,7 +457,7 @@ public class FightManager : MonoBehaviour
 
             stringBuilder.AppendLine(attacker + " bites " + victimDog + ".");
             
-            if (Random.value > (victimDog.biteIsLocked ? 0.2 : 0.7) )
+            if (Random.value > (victimDog.biteIsLocked ? 0.2 : 0.2) )
             {
                 attacker.biteIsLocked = true;
                 stringBuilder.AppendLine("Its jaws locking onto the skin of " + victimDog + "'s neck.");
