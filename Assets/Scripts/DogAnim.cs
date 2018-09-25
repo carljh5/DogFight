@@ -21,7 +21,8 @@ public class DogAnim : MonoBehaviour {
 		Attack,
         Death,
         Locking,
-        Locked
+        Locked,
+        Unlock
     }
 
 	void Start () {
@@ -52,7 +53,10 @@ public class DogAnim : MonoBehaviour {
             case animType.Locked:
                 BloodAura.gameObject.SetActive(true);
                 break;
-			default:
+            case animType.Unlock:
+                BloodAura.gameObject.SetActive(false);
+                break;
+            default:
 				break;
 		}
 	}

@@ -8,4 +8,9 @@ public class DisableOnEndAnimation : MonoBehaviour {
     {
         gameObject.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        gameObject.SetActive(false);
+    }
 }

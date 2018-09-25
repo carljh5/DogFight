@@ -213,13 +213,16 @@ public class FightManager : MonoBehaviour
 
         ShowFeedbackWindow();
 
-        if(!firstDog.biteIsLocked)
+        if (!firstDog.biteIsLocked)
+        {
             animation.Play(DogAnim.animType.Attack);
+            secondAnim.Play(DogAnim.animType.Unlock);
+        }
         else
         {
-            //animation.Play(DogAnim.animType.Hit);
-            animation.Play(DogAnim.animType.Locking);
-            secondAnim.Play(DogAnim.animType.Locked);
+            animation.Play(DogAnim.animType.Hit);
+            //animation.Play(DogAnim.animType.Locking);
+            //secondAnim.Play(DogAnim.animType.Locked);
         }
 
         var wait = sound.PlayBite();
@@ -230,7 +233,7 @@ public class FightManager : MonoBehaviour
 
         if(feedStr.Contains("Its jaws locking"))
         {
-            animation.Play(DogAnim.animType.Locking);
+            //animation.Play(DogAnim.animType.Locking);
             secondAnim.Play(DogAnim.animType.Locked);
         }
 
@@ -275,13 +278,16 @@ public class FightManager : MonoBehaviour
 
         str = firstDog.currentStrength;
 
-        if(!seconDog.biteIsLocked)
+        if (!seconDog.biteIsLocked)
+        {
             secondAnim.Play(DogAnim.animType.Attack);
+            animation.Play(DogAnim.animType.Unlock);
+        }
         else
         {
-            //secondAnim.Play(DogAnim.animType.Hit);
-            secondAnim.Play(DogAnim.animType.Locking);
-            animation.Play(DogAnim.animType.Locked);
+            secondAnim.Play(DogAnim.animType.Hit);
+            //secondAnim.Play(DogAnim.animType.Locking);
+           //animation.Play(DogAnim.animType.Locked);
         }
 
         
@@ -291,7 +297,7 @@ public class FightManager : MonoBehaviour
 
         if (feedStr.Contains("Its jaws locking"))
         {
-            secondAnim.Play(DogAnim.animType.Locking);
+            //secondAnim.Play(DogAnim.animType.Locking);
             animation.Play(DogAnim.animType.Locked);
         }
 
