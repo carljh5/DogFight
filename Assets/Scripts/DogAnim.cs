@@ -8,11 +8,11 @@ public class DogAnim : MonoBehaviour {
 	Vector3 origScale;
     public Image DogImage;
 
-
     private List<GameObject> InstantiatedObjects = new List<GameObject>();
 
 	public GameObject blood;
     private Color startColor;
+    private Color BloodColor;
 
     public enum animType {
 		Hit,
@@ -23,17 +23,19 @@ public class DogAnim : MonoBehaviour {
 	void Start () {
 		origPos = transform.position;
 		origScale = transform.localScale;
-        
+
+        BloodColor = blood.GetComponent<Image>().color;
     }
 
 	public void Play(animType anim) {
 		switch (anim) {
 		case animType.Hit:
 				StartCoroutine (HitRoutine ());
-				if (blood.activeSelf)
+                if (blood.activeSelf)
 					InstantiatedObjects.Add( Instantiate (blood, blood.transform.position, Quaternion.Euler (new Vector3 (0, 0, Random.Range (0, 359))), blood.transform.parent));
-				blood.SetActive (true);
-				break;
+                blood.SetActive(true);
+
+                break;
 			case animType.Attack:
 				StartCoroutine (AttackRoutine ());
 				break;
@@ -49,6 +51,21 @@ public class DogAnim : MonoBehaviour {
     {
         float time = 0;
 
+        List<Image> bloodImages = new List<Image>();
+
+        var origBloodImage = blood.GetComponent<Image>();
+
+        bloodImages.Add(origBloodImage);
+
+        foreach(var go in InstantiatedObjects)
+        {
+            var im = go.GetComponent<Image>();
+
+            if (im)
+                bloodImages.Add(im);
+        }
+
+
         startColor = DogImage.color;
         var xColor = startColor;
 
@@ -59,7 +76,11 @@ public class DogAnim : MonoBehaviour {
             xColor.a = startColor.a * (1f - time / runTime);
 
             DogImage.color = xColor;
-            
+
+            foreach (Image im in bloodImages)
+            {
+                im.color = xColor;
+            }
             transform.position = new Vector3(transform.position.x, origPos.y + 100* time / runTime, transform.position.z);
             time += Time.deltaTime;
             yield return null;
@@ -99,6 +120,8 @@ public class DogAnim : MonoBehaviour {
 
     public void CleanUp()
     {
+        blood.GetComponent<Image>().color = BloodColor;
+
         blood.SetActive(false);
 
         DogImage.color = Color.white;
