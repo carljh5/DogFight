@@ -8,7 +8,7 @@ public class TextAnim : MonoBehaviour {
 
 	private float speedOfTyping = 0.03f;
 	private Coroutine co;
-	private bool isAnimPlaying;
+	public bool isAnimPlaying;
 	private string bufString = "";
 	private Text text;
 
