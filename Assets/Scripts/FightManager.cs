@@ -242,8 +242,11 @@ public class FightManager : MonoBehaviour
                 //HideFeedbackWindow();
                 yield break;
             }
-        yield return new WaitForSeconds(waitSeconds);
-        
+
+        yield return new WaitUntil(() => !display.isAnimPlaying);
+        yield return new WaitForSeconds(1.5f);
+
+
         doneShouting = false;
         StartCoroutine(PickAfterSeconds());
         yield return new WaitUntil(() => doneShouting);
@@ -283,7 +286,9 @@ public class FightManager : MonoBehaviour
             //HideFeedbackWindow();
             yield break;
         }
-        yield return new WaitForSeconds(waitSeconds);
+        yield return new WaitUntil(() => !display.isAnimPlaying);
+        yield return new WaitForSeconds(1.5f);
+
 
         if (seconDog.biteIsLocked && firstDog.biteIsLocked)
         {
