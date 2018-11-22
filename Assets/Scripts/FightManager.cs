@@ -216,7 +216,7 @@ public class FightManager : MonoBehaviour
         if (!firstDog.biteIsLocked)
         {
             animation.Play(DogAnim.animType.Attack);
-            secondAnim.Play(DogAnim.animType.Unlock);
+            //secondAnim.Play(DogAnim.animType.Unlock);
         }
         else
         {
@@ -281,7 +281,7 @@ public class FightManager : MonoBehaviour
         if (!seconDog.biteIsLocked)
         {
             secondAnim.Play(DogAnim.animType.Attack);
-            animation.Play(DogAnim.animType.Unlock);
+            //animation.Play(DogAnim.animType.Unlock);
         }
         else
         {
@@ -337,9 +337,8 @@ public class FightManager : MonoBehaviour
         {
             seconDog.biteIsLocked = false;
             firstDog.biteIsLocked = false;
-
-            animation.Play(DogAnim.animType.Locked);
-            secondAnim.Play(DogAnim.animType.Locked);
+            secondAnim.Play(DogAnim.animType.Unlock);
+            animation.Play(DogAnim.animType.Unlock);
 
             display.Play("The dogs jaws are locked onto eachother.\nThe Fight pauses for a few minutes, while the organizors seperate the locked jaws with dirty steel bars.");
 
